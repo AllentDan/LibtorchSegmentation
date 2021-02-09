@@ -81,6 +81,7 @@ segmentor.LoadWeight("segmentor.pt");
 segmentor.Predict(image,"person");
 ```
 the predicted result shows as follow:
+
 ![](https://raw.githubusercontent.com/AllentDan/SegmentationCpp/main/prediction.jpg)
 
 ### 📦 Models <a name="models"></a>
