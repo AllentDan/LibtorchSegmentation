@@ -76,7 +76,7 @@ segmentor.Train(0.0003,300,4,"your path to voc_person_seg",".jpg","your path to 
 cv::Mat image = cv::imread("your path to voc_person_seg\\val\\2007_004000.jpg");
 Segmentor<FPN> segmentor;
 segmentor.Initialize(0,512,512,{"background","person"},
-                      "resnet34","D:\\AllentFiles\\code\\tmp\\resnet34.pt");
+                      "resnet34","your path to resnet34.pt");
 segmentor.LoadWeight("segmentor.pt");
 segmentor.Predict(image,"person");
 ```
