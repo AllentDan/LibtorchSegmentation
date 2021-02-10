@@ -10,7 +10,7 @@ The main features of this library are:
 
  - High level API (just a line to create a neural network)
  - 2 models architectures for binary and multi class segmentation (including legendary Unet)
- - 4 available encoders
+ - 5 available encoders
  - All encoders have pre-trained weights for faster and better convergence
  
 ### [📚 Libtorch Tutorials 📚](https://github.com/AllentDan/LibtorchTutorials/tree/master)
@@ -76,12 +76,13 @@ segmentor.Train(0.0003,300,4,"your path to voc_person_seg",".jpg","your path to 
 cv::Mat image = cv::imread("your path to voc_person_seg\\val\\2007_004000.jpg");
 Segmentor<FPN> segmentor;
 segmentor.Initialize(0,512,512,{"background","person"},
-                      "resnet34","D:\\AllentFiles\\code\\tmp\\resnet34.pt");
+                      "resnet34","your path to resnet34.pt");
 segmentor.LoadWeight("segmentor.pt");
 segmentor.Predict(image,"person");
 ```
 the predicted result shows as follow:
-![]()
+
+![](https://raw.githubusercontent.com/AllentDan/SegmentationCpp/main/prediction.jpg)
 
 ### 📦 Models <a name="models"></a>
 
@@ -99,7 +100,7 @@ the predicted result shows as follow:
 - [ ] ResNext
 - [ ] ResNest
 
-The following is a list of supported encoders in the SMP. Select the appropriate family of encoders and click to expand the table and select a specific encoder and its pre-trained weights (`encoder_name` and `encoder_weights` parameters).
+The following is a list of supported encoders in the Libtorch Segment. All the encoders weights can be generated through torchvision except resnest. Select the appropriate family of encoders and click to expand the table and select a specific encoder and its pre-trained weights.
 
 <details>
 <summary style="margin-left: 25px;">ResNet</summary>
@@ -107,9 +108,9 @@ The following is a list of supported encoders in the SMP. Select the appropriate
 
 |Encoder                         |Weights                         |Params, M                       |
 |--------------------------------|:------------------------------:|:------------------------------:|
-|resnet18                        |imagenet / ssl / swsl           |11M                             |
+|resnet18                        |imagenet                        |11M                             |
 |resnet34                        |imagenet                        |21M                             |
-|resnet50                        |imagenet / ssl / swsl           |23M                             |
+|resnet50                        |imagenet                        |23M                             |
 |resnet101                       |imagenet                        |42M                             |
 |resnet152                       |imagenet                        |58M                             |
 
@@ -122,12 +123,8 @@ The following is a list of supported encoders in the SMP. Select the appropriate
 
 |Encoder                         |Weights                         |Params, M                       |
 |--------------------------------|:------------------------------:|:------------------------------:|
-|resnext50_32x4d                 |imagenet / ssl / swsl           |22M                             |
-|resnext101_32x4d                |ssl / swsl                      |42M                             |
-|resnext101_32x8d                |imagenet / instagram / ssl / swsl|86M                         |
-|resnext101_32x16d               |instagram / ssl / swsl          |191M                            |
-|resnext101_32x32d               |instagram                       |466M                            |
-|resnext101_32x48d               |instagram                       |826M                            |
+|resnext50_32x4d                 |imagenet                        |22M                             |
+|resnext101_32x8d                |imagenet                        |86M                             |
 
 </div>
 </details>
