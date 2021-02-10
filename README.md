@@ -100,7 +100,7 @@ the predicted result shows as follow:
 - [ ] ResNext
 - [ ] ResNest
 
-The following is a list of supported encoders in the SMP. Select the appropriate family of encoders and click to expand the table and select a specific encoder and its pre-trained weights (`encoder_name` and `encoder_weights` parameters).
+The following is a list of supported encoders in the Libtorch Segment. All the encoders weights can be generated through torchvision except resnest. Select the appropriate family of encoders and click to expand the table and select a specific encoder and its pre-trained weights.
 
 <details>
 <summary style="margin-left: 25px;">ResNet</summary>
@@ -108,9 +108,9 @@ The following is a list of supported encoders in the SMP. Select the appropriate
 
 |Encoder                         |Weights                         |Params, M                       |
 |--------------------------------|:------------------------------:|:------------------------------:|
-|resnet18                        |imagenet / ssl / swsl           |11M                             |
+|resnet18                        |imagenet                        |11M                             |
 |resnet34                        |imagenet                        |21M                             |
-|resnet50                        |imagenet / ssl / swsl           |23M                             |
+|resnet50                        |imagenet                        |23M                             |
 |resnet101                       |imagenet                        |42M                             |
 |resnet152                       |imagenet                        |58M                             |
 
@@ -123,12 +123,8 @@ The following is a list of supported encoders in the SMP. Select the appropriate
 
 |Encoder                         |Weights                         |Params, M                       |
 |--------------------------------|:------------------------------:|:------------------------------:|
-|resnext50_32x4d                 |imagenet / ssl / swsl           |22M                             |
-|resnext101_32x4d                |ssl / swsl                      |42M                             |
-|resnext101_32x8d                |imagenet / instagram / ssl / swsl|86M                         |
-|resnext101_32x16d               |instagram / ssl / swsl          |191M                            |
-|resnext101_32x32d               |instagram                       |466M                            |
-|resnext101_32x48d               |instagram                       |826M                            |
+|resnext50_32x4d                 |imagenet                        |22M                             |
+|resnext101_32x8d                |imagenet                        |86M                             |
 
 </div>
 </details>
