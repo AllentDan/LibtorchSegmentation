@@ -10,7 +10,7 @@ The main features of this library are:
 
  - High level API (just a line to create a neural network)
  - 2 models architectures for binary and multi class segmentation (including legendary Unet)
- - 5 available encoders
+ - 7 available encoders
  - All encoders have pre-trained weights for faster and better convergence
  
 ### [📚 Libtorch Tutorials 📚](https://github.com/AllentDan/LibtorchTutorials/tree/master)
@@ -95,9 +95,8 @@ the predicted result shows as follow:
  - [ ] DeepLabV3+ [[paper](https://arxiv.org/abs/1802.02611)] [[docs](https://smp.readthedocs.io/en/latest/models.html#id9)]
 
 #### Encoders <a name="encoders"></a>
-- [x] VGG
 - [x] ResNet
-- [ ] ResNext
+- [x] ResNext
 - [ ] ResNest
 
 The following is a list of supported encoders in the Libtorch Segment. All the encoders weights can be generated through torchvision except resnest. Select the appropriate family of encoders and click to expand the table and select a specific encoder and its pre-trained weights.
@@ -146,25 +145,6 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 
 </div>
 </details>
-
-<details>
-<summary style="margin-left: 25px;">VGG</summary>
-<div style="margin-left: 25px;">
-
-|Encoder                         |Weights                         |Params, M                       |
-|--------------------------------|:------------------------------:|:------------------------------:|
-|vgg11                           |imagenet                        |9M                              |
-|vgg11_bn                        |imagenet                        |9M                              |
-|vgg13                           |imagenet                        |9M                              |
-|vgg13_bn                        |imagenet                        |9M                              |
-|vgg16                           |imagenet                        |14M                             |
-|vgg16_bn                        |imagenet                        |14M                             |
-|vgg19                           |imagenet                        |20M                             |
-|vgg19_bn                        |imagenet                        |20M                             |
-
-</div>
-</details>
-
 
 ### 🛠 Installation <a name="installation"></a>
 Windows:
