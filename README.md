@@ -148,9 +148,11 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 
 ### 🛠 Installation <a name="installation"></a>
 Windows:
-Confige the environment for libtorch development. Visual studio and Qt Creator are verified for libtorch1.7x release.
+
+Configure the environment for libtorch development. Visual studio and Qt Creator are verified for libtorch1.7x release.
 
 Linux && MacOS:
+
 Follow the official pytorch c++ tutorials [here](https://pytorch.org/tutorials/advanced/cpp_export.html). It can be no more difficult than windows.
 
 ### 🤝 Thanks <a name="thanks"></a>
