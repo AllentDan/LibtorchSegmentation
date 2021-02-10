@@ -8,6 +8,7 @@ UNetImpl::UNetImpl(int _num_classes, std::string encoder_name, std::string pretr
     if(encoder_name!="resnet18" && encoder_name!="resnet34"){
         encoder_channels = BottleChannels;
     }
+
     encoder = pretrained_resnet(1000, encoder_name, pretrained_path);
     decoder = UNetDecoder(encoder_channels,decoder_channels, encoder_depth, use_attention, false);
     segmentation_head = SegmentationHead(decoder_channels[decoder_channels.size()-1], num_classes, 1, 1);

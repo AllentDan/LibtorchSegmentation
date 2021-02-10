@@ -2,7 +2,7 @@
 
 Conv3x3GNReLUImpl::Conv3x3GNReLUImpl(int _in_channels, int _out_channels, bool _upsample){
     upsample = _upsample;
-    block = torch::nn::Sequential(torch::nn::Conv2d(conv_options(_in_channels, _out_channels, 3, 1, 1, false)),
+    block = torch::nn::Sequential(torch::nn::Conv2d(conv_options(_in_channels, _out_channels, 3, 1, 1, 1, false)),
                                    torch::nn::GroupNorm(torch::nn::GroupNormOptions(32, _out_channels)),
                                    torch::nn::ReLU(torch::nn::ReLUOptions(true)));
     register_module("block",block);

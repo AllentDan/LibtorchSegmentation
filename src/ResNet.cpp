@@ -1,20 +1,21 @@
 #include "ResNet.h"
 
 BlockImpl::BlockImpl(int64_t inplanes, int64_t planes, int64_t stride_,
-    torch::nn::Sequential downsample_, bool _is_basic)
+    torch::nn::Sequential downsample_, int groups, int base_width, bool _is_basic)
 {
     downsample = downsample_;
     stride = stride_;
+	int width = int(planes * (base_width / 64.)) * groups;
 
-    conv1 = torch::nn::Conv2d(conv_options(inplanes, planes, 3, stride_, 1, false));
-    bn1 = torch::nn::BatchNorm2d(torch::nn::BatchNorm2dOptions(planes));
-    conv2 = torch::nn::Conv2d(conv_options(planes, planes, 3, 1, 1,false));
-    bn2 = torch::nn::BatchNorm2d(torch::nn::BatchNorm2dOptions(planes));
+    conv1 = torch::nn::Conv2d(conv_options(inplanes, width, 3, stride_, 1, groups, false));
+    bn1 = torch::nn::BatchNorm2d(torch::nn::BatchNorm2dOptions(width));
+    conv2 = torch::nn::Conv2d(conv_options(width, width, 3, 1, 1, groups, false));
+    bn2 = torch::nn::BatchNorm2d(torch::nn::BatchNorm2dOptions(width));
     is_basic = _is_basic;
     if (!is_basic) {
-        conv1 = torch::nn::Conv2d(conv_options(inplanes, planes, 1, 1, 0, false));
-        conv2 = torch::nn::Conv2d(conv_options(planes, planes, 3, stride_, 1, false));
-        conv3 = torch::nn::Conv2d(conv_options(planes, planes * 4, 1, 1, 0, false));
+        conv1 = torch::nn::Conv2d(conv_options(inplanes, width, 1, 1, 0, 1, false));
+        conv2 = torch::nn::Conv2d(conv_options(width, width, 3, stride_, 1, groups, false));
+        conv3 = torch::nn::Conv2d(conv_options(width, planes * 4, 1, 1, 0, 1, false));
         bn3 = torch::nn::BatchNorm2d(torch::nn::BatchNorm2dOptions(planes * 4));
     }
 
@@ -58,14 +59,16 @@ torch::Tensor BlockImpl::forward(torch::Tensor x) {
     return x;
 }
 
-ResNetImpl::ResNetImpl(std::vector<int> layers, int num_classes, std::string model_type)
+ResNetImpl::ResNetImpl(std::vector<int> layers, int num_classes, std::string model_type, int _groups, int _width_per_group)
 {
     if (model_type != "resnet18" && model_type != "resnet34")
     {
         expansion = 4;
         is_basic = false;
     }
-    conv1 = torch::nn::Conv2d(conv_options(3, 64, 7, 2, 3, false));
+	groups = _groups;
+	base_width = _width_per_group;
+    conv1 = torch::nn::Conv2d(conv_options(3, 64, 7, 2, 3, 1, false));
     bn1 = torch::nn::BatchNorm2d(torch::nn::BatchNorm2dOptions(64));
     layer1 = torch::nn::Sequential(_make_layer(64, layers[0]));
     layer2 = torch::nn::Sequential(_make_layer(128, layers[1], 2));
@@ -127,15 +130,15 @@ torch::nn::Sequential ResNetImpl::_make_layer(int64_t planes, int64_t blocks, in
     torch::nn::Sequential downsample;
     if (stride != 1 || inplanes != planes * expansion) {
         downsample = torch::nn::Sequential(
-            torch::nn::Conv2d(conv_options(inplanes, planes *  expansion, 1, stride, 0, false)),
+            torch::nn::Conv2d(conv_options(inplanes, planes *  expansion, 1, stride, 0, 1, false)),
             torch::nn::BatchNorm2d(planes *  expansion)
         );
     }
     torch::nn::Sequential layers;
-    layers->push_back(Block(inplanes, planes, stride, downsample, is_basic));
+    layers->push_back(Block(inplanes, planes, stride, downsample, groups, base_width, is_basic));
     inplanes = planes *  expansion;
     for (int64_t i = 1; i < blocks; i++) {
-        layers->push_back(Block(inplanes, planes, 1, torch::nn::Sequential(),is_basic));
+        layers->push_back(Block(inplanes, planes, 1, torch::nn::Sequential(), groups, base_width,is_basic));
     }
 
     return layers;
@@ -167,7 +170,15 @@ ResNet resnet101(int64_t num_classes) {
 
 ResNet pretrained_resnet(int64_t num_classes, std::string model_name, std::string weight_path){
     std::map<std::string, std::vector<int>> name2layers = getParams();
-    ResNet net_pretrained = ResNet(name2layers[model_name],1000,model_name);
+	int groups = 1;
+	int width_per_group = 64;
+	if (model_name == "resnext50_32x4d") {
+		groups = 32; width_per_group = 4;
+	}
+	if (model_name == "resnext101_32x8d") {
+		groups = 32; width_per_group = 8;
+	}
+    ResNet net_pretrained = ResNet(name2layers[model_name],1000,model_name,groups,width_per_group);
     torch::load(net_pretrained, weight_path);
     if(num_classes == 1000) return net_pretrained;
     ResNet module = ResNet(name2layers[model_name],num_classes,model_name);

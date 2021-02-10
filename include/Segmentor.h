@@ -38,7 +38,7 @@ void Segmentor<Model>::Initialize(int gpu_id,int _width, int _height, std::vecto
     name_list = _name_list;
     if ((_access(pretrained_path.data(), 0)) == -1)
     {
-        throw "Image path is invalid";
+        throw "Pretrained path is invalid";
     }
     if(name_list.size()<2) throw  "Class num is less than 1";
     int gpu_num = torch::getNumGPUs();
@@ -183,11 +183,11 @@ void Segmentor<Model>::Predict(cv::Mat image, std::string which_class){
     image = cv::Mat::ones(cv::Size(width, height), CV_8UC1);
 
     at::Tensor re = output[0][which_class_index].to(at::kCPU).detach();
-    std::cout<<re.max();
     memcpy(image.data, re.data_ptr(), width * height * sizeof(unsigned char));
     cv::resize(image, image, cv::Size(image_width, image_height));
 
     // draw the prediction
+	cv::imwrite("prediction.jpg", image);
     cv::imshow("prediction", image);
     cv::imshow("srcImage", srcImg);
     cv::waitKey(0);
