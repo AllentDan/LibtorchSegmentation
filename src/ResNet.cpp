@@ -144,6 +144,30 @@ torch::nn::Sequential ResNetImpl::_make_layer(int64_t planes, int64_t blocks, in
     return layers;
 }
 
+void ResNetImpl::make_dilated(std::vector<int> stage_list, std::vector<int> dilation_list) {
+	if (stage_list.size() != dilation_list.size()) {
+		std::cout << "make sure stage list len equal to dilation list len";
+		return;
+	}
+	std::map<int, torch::nn::Sequential> stage_dict = {};
+	stage_dict.insert(std::pair<int, torch::nn::Sequential>(5, this->layer4));
+	stage_dict.insert(std::pair<int, torch::nn::Sequential>(4, this->layer3));
+	stage_dict.insert(std::pair<int, torch::nn::Sequential>(3, this->layer2));
+	stage_dict.insert(std::pair<int, torch::nn::Sequential>(2, this->layer1));
+	for (int i = 0; i < stage_list.size(); i++) {
+		int dilation_rate = dilation_list[i];
+		for (auto m : stage_dict[stage_list[i]]->modules()) {
+			if (m->name() == "torch::nn::Conv2dImpl") {
+				m->as<torch::nn::Conv2d>()->options.stride(1);
+				m->as<torch::nn::Conv2d>()->options.dilation(dilation_rate);
+				int kernel_size = m->as<torch::nn::Conv2d>()->options.kernel_size()->at(0);
+				m->as<torch::nn::Conv2d>()->options.padding((kernel_size / 2) * dilation_rate);
+			}
+		}
+	}
+	return;
+}
+
 ResNet resnet18(int64_t num_classes) {
     std::vector<int> layers = { 2, 2, 2, 2 };
     ResNet model(layers, num_classes, "resnet18");

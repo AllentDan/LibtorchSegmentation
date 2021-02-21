@@ -29,7 +29,7 @@ public:
     torch::Tensor forward(torch::Tensor x);
     std::vector<torch::Tensor> features(torch::Tensor x);
     torch::nn::Sequential _make_layer(int64_t planes, int64_t blocks, int64_t stride = 1);
-
+	void make_dilated(std::vector<int> stage_list, std::vector<int> dilation_list);
 private:
     int expansion = 1; bool is_basic = true;
 	int64_t inplanes = 64; int groups = 1; int base_width = 64;

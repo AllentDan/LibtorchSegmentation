@@ -2,6 +2,7 @@
 #define SEGMENTOR_H
 #include"FPN.h"
 #include"UNet.h"
+#include"DeepLab.h"
 #include"SegDataset.h"
 #include <io.h>
 #include<opencv2/opencv.hpp>

@@ -7,12 +7,13 @@
 #include <io.h>
 
 inline torch::nn::Conv2dOptions conv_options(int64_t in_planes, int64_t out_planes, int64_t kerner_size,
-    int64_t stride = 1, int64_t padding = 0, int groups = 1, bool with_bias = true) {
+    int64_t stride = 1, int64_t padding = 0, int groups = 1, bool with_bias = true, int dilation = 1) {
     torch::nn::Conv2dOptions conv_options = torch::nn::Conv2dOptions(in_planes, out_planes, kerner_size);
     conv_options.stride(stride);
     conv_options.padding(padding);
     conv_options.bias(with_bias);
 	conv_options.groups(groups);
+	conv_options.dilation(dilation);
     return conv_options;
 }
 
