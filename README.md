@@ -89,10 +89,10 @@ the predicted result shows as follow:
 #### Architectures <a name="architectures"></a>
  - [x] Unet [[paper](https://arxiv.org/abs/1505.04597)]
  - [x] FPN [[paper](http://presentations.cocodataset.org/COCO17-Stuff-FAIR.pdf)]
+ - [x] DeepLabV3 [[paper](https://arxiv.org/abs/1706.05587)]
+ - [x] DeepLabV3+ [[paper](https://arxiv.org/abs/1802.02611)]
  - [ ] PSPNet [[paper](https://arxiv.org/abs/1612.01105)]
  - [ ] PAN [[paper](https://arxiv.org/abs/1805.10180)]
- - [ ] DeepLabV3 [[paper](https://arxiv.org/abs/1706.05587)]
- - [ ] DeepLabV3+ [[paper](https://arxiv.org/abs/1802.02611)]
 
 #### Encoders <a name="encoders"></a>
 - [x] ResNet
