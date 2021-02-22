@@ -53,14 +53,14 @@ import torch
 from torchvision import models
 
 # resnet50 for example
-model = models.resnet50(pretrained=True)
+model = models.resnet34(pretrained=True)
 model.eval()
 var=torch.ones((1,3,224,224))
 traced_script_module = torch.jit.trace(model, var)
-traced_script_module.save("resnet50.pt")
+traced_script_module.save("resnet34.pt")
 ```
 
-Congratulations! You are done! Now you can train your model with your favorite backbone and segmentation framework.
+The generated .pt file of resnet34 provides pretrained weight for segmentation architecture.
 
 ### 💡 Examples <a name="examples"></a>
  - Training model for person segmentation on using images from PASCAL VOC Dataset. voc_person_seg dir contains 32 json labels and their corresponding jpeg images for training and 8 json labels with images for validation.
