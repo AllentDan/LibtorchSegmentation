@@ -38,9 +38,9 @@ Segmentation model is just a LibTorch torch::nn::Module, which can be created as
 
 ```cpp
 #include "Segmentor.h"
-auto model = UNet(1, //num of classes
-                  "resnet34", //encoder name, could be resnet50 or others
-                  "path to resnet34.pt"//weight path pretrained on ImageNet, it is produced by torchscript
+auto model = UNet(1, /*num of classes*/
+                  "resnet34", /*encoder name, could be resnet50 or others*/
+                  "path to resnet34.pt"/*weight path pretrained on ImageNet, it is produced by torchscript*/
                   );
 ```
  - see [table](#architectires) with available model architectures
@@ -68,9 +68,18 @@ Congratulations! You are done! Now you can train your model with your favorite b
  - Training model for person segmentation using images from PASCAL VOC Dataset. "voc_person_seg" dir contains 32 json labels and their corresponding jpeg images for training and 8 json labels with corresponding images for validation.
 ```cpp
 Segmentor<FPN> segmentor;
-segmentor.Initialize(0,512,512,{"background","person"},
-                      "resnet34","your path to resnet34.pt");
-segmentor.Train(0.0003,300,4,"your path to voc_person_seg",".jpg","your path to save segmentor.pt");
+segmentor.Initialize(0/*gpu id, -1 for cpu*/,
+                    512/*resize width*/,
+                    512/*resize height*/,
+                    {"background","person"}/*class name dict, background included*/,
+                    "resnet34"/*backbone name*/,
+                    "your path to resnet34.pt");
+segmentor.Train(0.0003/*initial leaning rate*/,
+                300/*training epochs*/,
+                4/*batch size*/,
+                "your path to voc_person_seg",
+                ".jpg"/*image type*/,
+                "your path to save segmentor.pt");
 ```
 
 - Predicting test. A segmentor.pt file is provided in the project. You can directly test the segmentation result throgh:
