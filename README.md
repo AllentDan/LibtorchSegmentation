@@ -88,8 +88,8 @@ cv::Mat image = cv::imread("your path to voc_person_seg\\val\\2007_004000.jpg");
 Segmentor<FPN> segmentor;
 segmentor.Initialize(0,512,512,{"background","person"},
                       "resnet34","your path to resnet34.pt");
-segmentor.LoadWeight("segmentor.pt");
-segmentor.Predict(image,"person");
+segmentor.LoadWeight("segmentor.pt"/*the saved .pt path*/);
+segmentor.Predict(image,"person"/*class name for showing*/);
 ```
 the predicted result shows as follow:
 
