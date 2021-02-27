@@ -1,11 +1,11 @@
+[中文](https://github.com/AllentDan/SegmentationCpp/blob/main/README-Chinese.md)
 <div align="center">
- 
+
 ![logo](https://raw.githubusercontent.com/AllentDan/ImageBase/main/OpenSource/LibtorchSegment.png)  
 **C++ library with Neural Networks for Image  
 Segmentation based on [LibTorch](https://pytorch.org/).**  
 
 </div>
-
 The main features of this library are:
 
  - High level API (just a line to create a neural network)
