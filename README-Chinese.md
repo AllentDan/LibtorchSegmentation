@@ -1,40 +1,39 @@
 <div align="center">
- 
+
 ![logo](https://raw.githubusercontent.com/AllentDan/ImageBase/main/OpenSource/LibtorchSegment.png)  
-**C++ library with Neural Networks for Image  
-Segmentation based on [LibTorch](https://pytorch.org/).**  
+**基于[LibTorch](https://pytorch.org/)的C++开源图像分割神经网络库.**  
 
 </div>
 
-The main features of this library are:
+这个库具有以下优点:
 
- - High level API (just a line to create a neural network)
- - 5 models architectures for binary and multi class segmentation (including legendary Unet)
- - 7 available encoders
- - All encoders have pre-trained weights for faster and better convergence
- - 2x or more faster than pytorch cuda inferece, same speed for cpu. (Unet tested in gtx 2070s).
+ - 高级的API (只需一行代码就可创建网络)
+ - 五种模型架构可用于单类或者多类的分割任务 (包括Unet)
+ - 7 种编码器网络
+ - 所有的编码器都有预训练权重，可以更快更好地收敛
+ - 相比于python下的GPU前向推理速度具有2倍或以上的优势, cpu下保持速度一致. (Unet测试于GTX 2070S).
  
-### [📚 Libtorch Tutorials 📚](https://github.com/AllentDan/LibtorchTutorials/tree/master)
+### [📚 Libtorch教程 📚](https://github.com/AllentDan/LibtorchTutorials/tree/master)
 
-Visit [Libtorch Tutorials Project](https://github.com/AllentDan/LibtorchTutorials/tree/master) if you want to know more about Libtorch Segment library.
+如果你想对该开源项目有更多更详细的了解，请前往本人另一个开源项目：[Libtorch教程](https://github.com/AllentDan/LibtorchTutorials/tree/master) .
 
-### 📋 Table of content
- 1. [Quick start](#start)
- 2. [Examples](#examples)
- 3. [Train your own data](#trainingOwn)
- 4. [Models](#models)
-    1. [Architectures](#architectures)
-    2. [Encoders](#encoders)
- 5. [Installation](#installation)
- 6. [Thanks](#thanks)
- 7. [Citing](#citing)
- 8. [License](#license)
+### 📋 目录
+ 1. [快速开始](#start)
+ 2. [例子](#examples)
+ 3. [训练自己的数据](#trainingOwn)
+ 4. [模型](#models)
+    1. [架构](#architectures)
+    2. [编码器](#encoders)
+ 5. [安装](#installation)
+ 6. [感谢](#thanks)
+ 7. [引用](#citing)
+ 8. [证书](#license)
 
-### ⏳ Quick start <a name="start"></a>
+### ⏳ 快速开始 <a name="start"></a>
 
-#### 1. Create your first Segmentation model with Libtorch Segment
+#### 1. 用 Libtorch Segment 创建你的第一个分割网络
 
-Segmentation model is just a LibTorch torch::nn::Module, which can be created as easy as:
+分割模型是 LibTorch 的 torch::nn::Module的派生类, 可以很容易生成:
 
 ```cpp
 #include "Segmentor.h"
@@ -43,12 +42,12 @@ auto model = UNet(1, /*num of classes*/
                   "path to resnet34.pt"/*weight path pretrained on ImageNet, it is produced by torchscript*/
                   );
 ```
- - see [table](#architectures) with available model architectures
- - see [table](#encoders) with available encoders and their corresponding weights
+ - 见 [表](#architectures) 查看所有支持的模型架构
+ - 见 [表](#encoders) 查看所有的编码器网络和相应的预训练权重
 
-#### 2. Generate your own pretrained weights
+#### 2. 生成自己的预训练权重
 
-All encoders have pretrained weights. Preparing your data the same way as during weights pre-training may give your better results (higher metric score and faster convergence). And you can also train only the decoder and segmentation head while freeze the backbone.
+所有编码器均具有预训练的权重。加载预训练权重，以相同的方式训练数据，可能会获得更好的结果（更高的指标得分和更快的收敛速度）。还可以在冻结主干的同时仅训练解码器和分割头。
 
 ```python
 import torch
@@ -62,10 +61,10 @@ traced_script_module = torch.jit.trace(model, var)
 traced_script_module.save("resnet50.pt")
 ```
 
-Congratulations! You are done! Now you can train your model with your favorite backbone and segmentation framework.
+恭喜你！ 大功告成！ 现在，您可以使用自己喜欢的主干和分割框架来训练模型了。
 
-### 💡 Examples <a name="examples"></a>
- - Training model for person segmentation using images from PASCAL VOC Dataset. "voc_person_seg" dir contains 32 json labels and their corresponding jpeg images for training and 8 json labels with corresponding images for validation.
+### 💡 例子 <a name="examples"></a>
+ - 使用来自PASCAL VOC数据集的图像进行人体分割数据训练模型. "voc_person_seg" 目录包含32个json标签及其相应的jpeg图像用于训练，还有8个json标签以及相应的图像用于验证。
 ```cpp
 Segmentor<FPN> segmentor;
 segmentor.Initialize(0/*gpu id, -1 for cpu*/,
@@ -82,7 +81,7 @@ segmentor.Train(0.0003/*initial leaning rate*/,
                 "your path to save segmentor.pt");
 ```
 
-- Predicting test. A segmentor.pt file is provided in the project. It is trained through a FPN with ResNet34 backbone for a few epochs. You can directly test the segmentation result throgh:
+- 预测测试。项目中提供了以ResNet34为骨干网络的FPN网络，训练了一些周期得到segmentor.pt文件。 您可以直接测试分割结果:
 ```cpp
 cv::Mat image = cv::imread("your path to voc_person_seg\\val\\2007_004000.jpg");
 Segmentor<FPN> segmentor;
@@ -91,12 +90,12 @@ segmentor.Initialize(0,512,512,{"background","person"},
 segmentor.LoadWeight("segmentor.pt"/*the saved .pt path*/);
 segmentor.Predict(image,"person"/*class name for showing*/);
 ```
-the predicted result shows as follow:
+预测结果显示如下:
 
 ![](https://raw.githubusercontent.com/AllentDan/SegmentationCpp/main/prediction.jpg)
 
-### 🧑‍🚀 Train your own data <a name="trainingOwn"></a>
-- Create your own dataset. Using [labelme](https://github.com/wkentaro/labelme) through "pip install" and label your images. Split the output json files and images into folders just like below:
+### 🧑‍🚀 训练自己的数据 <a name="trainingOwn"></a>
+- 创建自己的数据集. 使用"pip install"安装[labelme](https://github.com/wkentaro/labelme)并标注你的图像. 将输出的json文件和图像分成以下文件夹：
 ```
 Dataset
 ├── train
@@ -108,7 +107,7 @@ Dataset
 │   ├── xxxx.jpg
 │   └......
 ```
-- Training or testing. Just like the example of "voc_person_seg", replace "voc_person_seg" with your own dataset path.
+- 训练或测试。就像“ voc_person_seg”的示例一样，用自己的数据集路径替换“ voc_person_seg”。
 
 
 ### 📦 Models <a name="models"></a>
@@ -126,7 +125,7 @@ Dataset
 - [x] ResNext
 - [ ] ResNest
 
-The following is a list of supported encoders in the Libtorch Segment. All the encoders weights can be generated through torchvision except resnest. Select the appropriate family of encoders and click to expand the table and select a specific encoder and its pre-trained weights.
+以下是该项目中受支持的编码器的列表。除resnest外，所有编码器权重都可以通过torchvision生成。选择适当的编码器，然后单击以展开表格，然后选择特定的编码器及其预训练的权重。
 
 <details>
 <summary style="margin-left: 25px;">ResNet</summary>
@@ -173,23 +172,23 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 </div>
 </details>
 
-### 🛠 Installation <a name="installation"></a>
+### 🛠 安装 <a name="installation"></a>
 Windows:
 
-Configure the environment for libtorch development. [Visual studio](https://allentdan.github.io/2020/12/16/pytorch%E9%83%A8%E7%BD%B2torchscript%E7%AF%87) and [Qt Creator](https://allentdan.github.io/2021/01/21/QT%20Creator%20+%20Opencv4.x%20+%20Libtorch1.7%E9%85%8D%E7%BD%AE/#more) are verified for libtorch1.7x release. Only chinese configuration blogs provided by now, english version ASAP.
+配置libtorch 开发环境. [Visual studio](https://allentdan.github.io/2020/12/16/pytorch%E9%83%A8%E7%BD%B2torchscript%E7%AF%87) 和 [Qt Creator](https://allentdan.github.io/2021/01/21/QT%20Creator%20+%20Opencv4.x%20+%20Libtorch1.7%E9%85%8D%E7%BD%AE/#more)已经通过libtorch1.7x release的验证. 
 
 Linux && MacOS:
 
-Follow the official pytorch c++ tutorials [here](https://pytorch.org/tutorials/advanced/cpp_export.html). It can be no more difficult than windows.
+按照官方提供的pytorch c++ [部署](https://pytorch.org/tutorials/advanced/cpp_export.html). 比Windows要简单许多.
 
-### 🤝 Thanks <a name="thanks"></a>
-This project is under developing. By now, these projects helps a lot.
+### 🤝 感谢 <a name="thanks"></a>
+这个项目还在施工，以下是目前给予帮助的项目.
 - [official pytorch](https://github.com/pytorch/pytorch)
 - [qubvel SMP](https://github.com/qubvel/segmentation_models.pytorch)
 - [wkentaro labelme](https://github.com/wkentaro/labelme)
 - [nlohmann json](https://github.com/nlohmann/json)
 
-### 📝 Citing
+### 📝 引用
 ```
 @misc{Chunyu:2021,
   Author = {Chunyu Dong},
@@ -201,5 +200,5 @@ This project is under developing. By now, these projects helps a lot.
 }
 ```
 
-### 🛡️ License <a name="license"></a>
-Project is distributed under [MIT License](https://github.com/qubvel/segmentation_models.pytorch/blob/master/LICENSE)
+### 🛡️ 证书 <a name="license"></a>
+该项目以 [MIT License](https://github.com/qubvel/segmentation_models.pytorch/blob/master/LICENSE)开源。
