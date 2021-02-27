@@ -9,9 +9,10 @@ Segmentation based on [LibTorch](https://pytorch.org/).**
 The main features of this library are:
 
  - High level API (just a line to create a neural network)
- - 2 models architectures for binary and multi class segmentation (including legendary Unet)
+ - 5 models architectures for binary and multi class segmentation (including legendary Unet)
  - 7 available encoders
  - All encoders have pre-trained weights for faster and better convergence
+ - 2x or more faster than pytorch cuda inferece, same speed for cpu. (Unet tested in gtx 2070s).
  
 ### [📚 Libtorch Tutorials 📚](https://github.com/AllentDan/LibtorchTutorials/tree/master)
 
@@ -20,13 +21,14 @@ Visit [Libtorch Tutorials Project](https://github.com/AllentDan/LibtorchTutorial
 ### 📋 Table of content
  1. [Quick start](#start)
  2. [Examples](#examples)
- 3. [Models](#models)
+ 3. [Train your own data](#trainingOwn)
+ 4. [Models](#models)
     1. [Architectures](#architectures)
     2. [Encoders](#encoders)
- 4. [Installation](#installation)
- 5. [Thanks](#thanks)
- 6. [Citing](#citing)
- 7. [License](#license)
+ 5. [Installation](#installation)
+ 6. [Thanks](#thanks)
+ 7. [Citing](#citing)
+ 8. [License](#license)
 
 ### ⏳ Quick start <a name="start"></a>
 
@@ -63,7 +65,7 @@ traced_script_module.save("resnet50.pt")
 Congratulations! You are done! Now you can train your model with your favorite backbone and segmentation framework.
 
 ### 💡 Examples <a name="examples"></a>
- - Training model for person segmentation on using images from PASCAL VOC Dataset. voc_person_seg dir contains 32 json labels and their corresponding jpeg images for training and 8 json labels with images for validation.
+ - Training model for person segmentation using images from PASCAL VOC Dataset. "voc_person_seg" dir contains 32 json labels and their corresponding jpeg images for training and 8 json labels with corresponding images for validation.
 ```cpp
 Segmentor<FPN> segmentor;
 segmentor.Initialize(0,512,512,{"background","person"},
@@ -84,15 +86,31 @@ the predicted result shows as follow:
 
 ![](https://raw.githubusercontent.com/AllentDan/SegmentationCpp/main/prediction.jpg)
 
+### 🧑‍🚀 Train your own data <a name="trainingOwn"></a>
+- Create your own dataset. Using [labelme](https://github.com/wkentaro/labelme) through "pip install" and label your images. Split the output json files and images into folders just like below:
+```
+Dataset
+├── train
+│   ├── xxx.json
+│   ├── xxx.jpg
+│   └......
+├── val
+│   ├── xxxx.json
+│   ├── xxxx.jpg
+│   └......
+```
+- Training or testing. Just like the example of "voc_person_seg", replace "voc_person_seg" with your own dataset path.
+
+
 ### 📦 Models <a name="models"></a>
 
 #### Architectures <a name="architectures"></a>
  - [x] Unet [[paper](https://arxiv.org/abs/1505.04597)]
  - [x] FPN [[paper](http://presentations.cocodataset.org/COCO17-Stuff-FAIR.pdf)]
+ - [x] PAN [[paper](https://arxiv.org/abs/1805.10180)]
+ - [x] DeepLabV3 [[paper](https://arxiv.org/abs/1706.05587)]
+ - [x] DeepLabV3+ [[paper](https://arxiv.org/abs/1802.02611)]
  - [ ] PSPNet [[paper](https://arxiv.org/abs/1612.01105)]
- - [ ] PAN [[paper](https://arxiv.org/abs/1805.10180)]
- - [ ] DeepLabV3 [[paper](https://arxiv.org/abs/1706.05587)]
- - [ ] DeepLabV3+ [[paper](https://arxiv.org/abs/1802.02611)]
 
 #### Encoders <a name="encoders"></a>
 - [x] ResNet
@@ -149,7 +167,7 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 ### 🛠 Installation <a name="installation"></a>
 Windows:
 
-Configure the environment for libtorch development. Visual studio and Qt Creator are verified for libtorch1.7x release.
+Configure the environment for libtorch development. [Visual studio](https://allentdan.github.io/2020/12/16/pytorch%E9%83%A8%E7%BD%B2torchscript%E7%AF%87) and [Qt Creator](https://allentdan.github.io/2021/01/21/QT%20Creator%20+%20Opencv4.x%20+%20Libtorch1.7%E9%85%8D%E7%BD%AE/#more) are verified for libtorch1.7x release. Only chinese configuration blogs provided by now, english version ASAP.
 
 Linux && MacOS:
 
@@ -159,6 +177,7 @@ Follow the official pytorch c++ tutorials [here](https://pytorch.org/tutorials/a
 This project is under developing. By now, these projects helps a lot.
 - [official pytorch](https://github.com/pytorch/pytorch)
 - [qubvel SMP](https://github.com/qubvel/segmentation_models.pytorch)
+- [wkentaro labelme](https://github.com/wkentaro/labelme)
 - [nlohmann json](https://github.com/nlohmann/json)
 
 ### 📝 Citing

@@ -1,6 +1,7 @@
 #ifndef SEGMENTOR_H
 #define SEGMENTOR_H
 #include"FPN.h"
+#include"PAN.h"
 #include"UNet.h"
 #include"DeepLab.h"
 #include"SegDataset.h"
