@@ -82,7 +82,7 @@ segmentor.Train(0.0003/*initial leaning rate*/,
                 "your path to save segmentor.pt");
 ```
 
-- Predicting test. A segmentor.pt file is provided in the project. It is trained through a FPN with ResNet34 backbone for a few epochs. You can directly test the segmentation result throgh:
+- Predicting test. A segmentor.pt file is provided in the project. It is trained through a FPN with ResNet34 backbone for a few epochs. You can directly test the segmentation result through:
 ```cpp
 cv::Mat image = cv::imread("your path to voc_person_seg\\val\\2007_004000.jpg");
 Segmentor<FPN> segmentor;
