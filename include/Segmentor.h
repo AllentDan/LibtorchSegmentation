@@ -3,6 +3,7 @@
 #include"FPN.h"
 #include"PAN.h"
 #include"UNet.h"
+#include"LinkNet.h"
 #include"DeepLab.h"
 #include"SegDataset.h"
 #include <io.h>

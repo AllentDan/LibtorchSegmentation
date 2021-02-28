@@ -13,9 +13,9 @@
  - 所有的编码器都有预训练权重，可以更快更好地收敛
  - 相比于python下的GPU前向推理速度具有2倍或以上的优势, cpu下保持速度一致. (Unet测试于GTX 2070S).
  
-### [📚 Libtorch教程 📚](https://github.com/AllentDan/LibtorchTutorials/tree/master)
+### [📚 Libtorch教程 📚](https://github.com/AllentDan/LibtorchTutorials)
 
-如果你想对该开源项目有更多更详细的了解，请前往本人另一个开源项目：[Libtorch教程](https://github.com/AllentDan/LibtorchTutorials/tree/master) .
+如果你想对该开源项目有更多更详细的了解，请前往本人另一个开源项目：[Libtorch教程](https://github.com/AllentDan/LibtorchTutorials) .
 
 ### 📋 目录
  1. [快速开始](#start)

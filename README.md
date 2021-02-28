@@ -9,7 +9,7 @@ Segmentation based on [LibTorch](https://pytorch.org/).**
 The main features of this library are:
 
  - High level API (just a line to create a neural network)
- - 5 models architectures for binary and multi class segmentation (including legendary Unet)
+ - 6 models architectures for binary and multi class segmentation (including legendary Unet)
  - 7 available encoders
  - All encoders have pre-trained weights for faster and better convergence
  - 2x or more faster than pytorch cuda inferece, same speed for cpu. (Unet tested in gtx 2070s).
@@ -117,6 +117,7 @@ Dataset
  - [x] Unet [[paper](https://arxiv.org/abs/1505.04597)]
  - [x] FPN [[paper](http://presentations.cocodataset.org/COCO17-Stuff-FAIR.pdf)]
  - [x] PAN [[paper](https://arxiv.org/abs/1805.10180)]
+ - [x] LinkNet [[paper](https://arxiv.org/abs/1707.03718)]
  - [x] DeepLabV3 [[paper](https://arxiv.org/abs/1706.05587)]
  - [x] DeepLabV3+ [[paper](https://arxiv.org/abs/1802.02611)]
  - [ ] PSPNet [[paper](https://arxiv.org/abs/1612.01105)]
