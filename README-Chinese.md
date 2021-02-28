@@ -116,6 +116,7 @@ Dataset
  - [x] Unet [[paper](https://arxiv.org/abs/1505.04597)]
  - [x] FPN [[paper](http://presentations.cocodataset.org/COCO17-Stuff-FAIR.pdf)]
  - [x] PAN [[paper](https://arxiv.org/abs/1805.10180)]
+ - [x] LinkNet [[paper](https://arxiv.org/abs/1707.03718)]
  - [x] DeepLabV3 [[paper](https://arxiv.org/abs/1706.05587)]
  - [x] DeepLabV3+ [[paper](https://arxiv.org/abs/1802.02611)]
  - [ ] PSPNet [[paper](https://arxiv.org/abs/1612.01105)]
