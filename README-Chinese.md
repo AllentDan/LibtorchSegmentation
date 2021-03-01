@@ -203,3 +203,4 @@ Linux && MacOS:
 
 ### 🛡️ 证书 <a name="license"></a>
 该项目以 [MIT License](https://github.com/qubvel/segmentation_models.pytorch/blob/master/LICENSE)开源，别忘了点赞哟
+![stargazers over time](https://starchart.cc/AllentDan/SegmentationCpp.svg)
