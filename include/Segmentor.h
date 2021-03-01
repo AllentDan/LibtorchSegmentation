@@ -4,6 +4,7 @@
 #include"PAN.h"
 #include"UNet.h"
 #include"LinkNet.h"
+#include"PSPNet.h"
 #include"DeepLab.h"
 #include"SegDataset.h"
 #include <io.h>
