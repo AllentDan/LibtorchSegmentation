@@ -104,7 +104,16 @@ torch::Tensor  ResNetImpl::forward(torch::Tensor x) {
     return torch::log_softmax(x, 1);
 }
 
-std::vector<torch::Tensor> ResNetImpl::features(torch::Tensor x){
+std::vector<torch::nn::Sequential> ResNetImpl::get_stages() {
+	std::vector<torch::nn::Sequential> ans;
+	ans.push_back(this->layer1);
+	ans.push_back(this->layer2);
+	ans.push_back(this->layer3);
+	ans.push_back(this->layer4);
+	return ans;
+}
+
+std::vector<torch::Tensor> ResNetImpl::features(torch::Tensor x, int encoder_depth){
     std::vector<torch::Tensor> features;
     features.push_back(x);
     x = conv1->forward(x);
@@ -113,14 +122,19 @@ std::vector<torch::Tensor> ResNetImpl::features(torch::Tensor x){
     features.push_back(x);
     x = torch::max_pool2d(x, 3, 2, 1);
 
-    x = layer1->forward(x);
-    features.push_back(x);
-    x = layer2->forward(x);
-    features.push_back(x);
-    x = layer3->forward(x);
-    features.push_back(x);
-    x = layer4->forward(x);
-    features.push_back(x);
+	std::vector<torch::nn::Sequential> stages = get_stages();
+	for (int i = 0; i < encoder_depth - 1; i++) {
+		x = stages[i]->as<torch::nn::Sequential>()->forward(x);
+		features.push_back(x);
+	}
+    //x = layer1->forward(x);
+    //features.push_back(x);
+    //x = layer2->forward(x);
+    //features.push_back(x);
+    //x = layer3->forward(x);
+    //features.push_back(x);
+    //x = layer4->forward(x);
+    //features.push_back(x);
 
     return features;
 }

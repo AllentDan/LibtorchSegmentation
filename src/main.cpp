@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
 {
     cv::Mat image = cv::imread("D:\\AllentFiles\\data\\dataset4teach\\voc_person_seg\\val\\2007_004000.jpg");
 
-    Segmentor<PSPNet> segmentor;
+    Segmentor<PAN> segmentor;
     segmentor.Initialize(0,512,512,{"background","person"},
                          "resnext50_32x4d","D:\\AllentFiles\\code\\tmp\\resnext50_32x4d.pt");
     segmentor.LoadWeight("segmentor.pt");

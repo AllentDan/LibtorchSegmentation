@@ -27,8 +27,9 @@ public:
     ResNetImpl(std::vector<int> layers, int num_classes = 1000, std::string model_type = "resnet18",
 		int groups = 1, int width_per_group = 64);
     torch::Tensor forward(torch::Tensor x);
-    std::vector<torch::Tensor> features(torch::Tensor x);
+    std::vector<torch::Tensor> features(torch::Tensor x, int encoder_depth = 5);
     torch::nn::Sequential _make_layer(int64_t planes, int64_t blocks, int64_t stride = 1);
+	std::vector<torch::nn::Sequential> get_stages();
 	void make_dilated(std::vector<int> stage_list, std::vector<int> dilation_list);
 private:
     int expansion = 1; bool is_basic = true;

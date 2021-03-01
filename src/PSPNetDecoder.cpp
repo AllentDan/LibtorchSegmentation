@@ -50,8 +50,7 @@ PSPDecoderImpl::PSPDecoderImpl(std::vector<int> encoder_channels, int out_channe
 }
 
 torch::Tensor PSPDecoderImpl::forward(std::vector<torch::Tensor> features) {
-	
-	auto x = features[encoder_depth];
+	auto x = features[features.size()-1];
 	x = psp->forward(x);
 	x = conv->forward(x);
 	x = dropout->forward(x);
