@@ -8,7 +8,7 @@
 这个库具有以下优点:
 
  - 高级的API (只需一行代码就可创建网络)
- - 6 种模型架构可用于单类或者多类的分割任务 (包括Unet)
+ - 7 种模型架构可用于单类或者多类的分割任务 (包括Unet)
  - 7 种编码器网络
  - 所有的编码器都有预训练权重，可以更快更好地收敛
  - 相比于python下的GPU前向推理速度具有2倍或以上的优势, cpu下保持速度一致. (Unet测试于GTX 2070S).
@@ -116,10 +116,10 @@ Dataset
  - [x] Unet [[paper](https://arxiv.org/abs/1505.04597)]
  - [x] FPN [[paper](http://presentations.cocodataset.org/COCO17-Stuff-FAIR.pdf)]
  - [x] PAN [[paper](https://arxiv.org/abs/1805.10180)]
+ - [x] PSPNet [[paper](https://arxiv.org/abs/1612.01105)]
  - [x] LinkNet [[paper](https://arxiv.org/abs/1707.03718)]
  - [x] DeepLabV3 [[paper](https://arxiv.org/abs/1706.05587)]
  - [x] DeepLabV3+ [[paper](https://arxiv.org/abs/1802.02611)]
- - [ ] PSPNet [[paper](https://arxiv.org/abs/1612.01105)]
 
 #### Encoders <a name="encoders"></a>
 - [x] ResNet
