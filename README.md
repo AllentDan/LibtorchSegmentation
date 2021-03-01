@@ -203,4 +203,4 @@ This project is under developing. By now, these projects helps a lot.
 ```
 
 ### 🛡️ License <a name="license"></a>
-Project is distributed under [MIT License](https://github.com/qubvel/segmentation_models.pytorch/blob/master/LICENSE)
+Project is distributed under [MIT License](https://github.com/qubvel/segmentation_models.pytorch/blob/master/LICENSE), last but not least, do not forget your star...
