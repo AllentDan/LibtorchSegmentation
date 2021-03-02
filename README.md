@@ -1,4 +1,4 @@
-[中文](https://github.com/AllentDan/SegmentationCpp/blob/main/README-Chinese.md)
+English | [中文](https://github.com/AllentDan/SegmentationCpp/blob/main/README-Chinese.md)
 <div align="center">
 
 ![logo](https://raw.githubusercontent.com/AllentDan/ImageBase/main/OpenSource/LibtorchSegment.png)  
