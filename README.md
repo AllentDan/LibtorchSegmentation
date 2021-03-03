@@ -121,12 +121,14 @@ Dataset
  - [x] LinkNet [[paper](https://arxiv.org/abs/1707.03718)]
  - [x] DeepLabV3 [[paper](https://arxiv.org/abs/1706.05587)]
  - [x] DeepLabV3+ [[paper](https://arxiv.org/abs/1802.02611)]
+ - [ ] UNet++ [[paper](https://arxiv.org/pdf/1807.10165.pdf)]
 
 
 #### Encoders <a name="encoders"></a>
 - [x] ResNet
 - [x] ResNext
 - [ ] ResNest
+- [ ] Se-Net
 
 The following is a list of supported encoders in the Libtorch Segment. All the encoders weights can be generated through torchvision except resnest. Select the appropriate family of encoders and click to expand the table and select a specific encoder and its pre-trained weights.
 
@@ -175,12 +177,33 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 </div>
 </details>
 
+<details>
+<summary style="margin-left: 25px;">SE-Net</summary>
+<div style="margin-left: 25px;">
+
+|Encoder                         |Weights                         |Params, M                       |
+|--------------------------------|:------------------------------:|:------------------------------:|
+|senet154                        |imagenet                        |113M                            |
+|se_resnet50                     |imagenet                        |26M                             |
+|se_resnet101                    |imagenet                        |47M                             |
+|se_resnet152                    |imagenet                        |64M                             |
+|se_resnext50_32x4d              |imagenet                        |25M                             |
+|se_resnext101_32x4d             |imagenet                        |46M                             |
+
+</div>
+</details>
+
 ### 🛠 Installation <a name="installation"></a>
-Windows:
+**Dependency:**
+
+[Opencv 3+](https://opencv.org/releases/)
+[Libtorch 1.7+](https://pytorch.org/)
+
+**Windows:**
 
 Configure the environment for libtorch development. [Visual studio](https://allentdan.github.io/2020/12/16/pytorch%E9%83%A8%E7%BD%B2torchscript%E7%AF%87) and [Qt Creator](https://allentdan.github.io/2021/01/21/QT%20Creator%20+%20Opencv4.x%20+%20Libtorch1.7%E9%85%8D%E7%BD%AE/#more) are verified for libtorch1.7x release. Only chinese configuration blogs provided by now, english version ASAP.
 
-Linux && MacOS:
+**Linux && MacOS:**
 
 Follow the official pytorch c++ tutorials [here](https://pytorch.org/tutorials/advanced/cpp_export.html). It can be no more difficult than windows.
 

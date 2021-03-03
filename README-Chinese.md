@@ -120,11 +120,13 @@ Dataset
  - [x] LinkNet [[paper](https://arxiv.org/abs/1707.03718)]
  - [x] DeepLabV3 [[paper](https://arxiv.org/abs/1706.05587)]
  - [x] DeepLabV3+ [[paper](https://arxiv.org/abs/1802.02611)]
+ - [ ] UNet++ [[paper](https://arxiv.org/pdf/1807.10165.pdf)]
 
 #### Encoders <a name="encoders"></a>
 - [x] ResNet
 - [x] ResNext
 - [ ] ResNest
+- [ ] Se-Net
 
 以下是该项目中受支持的编码器的列表。除resnest外，所有编码器权重都可以通过torchvision生成。选择适当的编码器，然后单击以展开表格，然后选择特定的编码器及其预训练的权重。
 
@@ -173,12 +175,33 @@ Dataset
 </div>
 </details>
 
+<details>
+<summary style="margin-left: 25px;">SE-Net</summary>
+<div style="margin-left: 25px;">
+
+|Encoder                         |Weights                         |Params, M                       |
+|--------------------------------|:------------------------------:|:------------------------------:|
+|senet154                        |imagenet                        |113M                            |
+|se_resnet50                     |imagenet                        |26M                             |
+|se_resnet101                    |imagenet                        |47M                             |
+|se_resnet152                    |imagenet                        |64M                             |
+|se_resnext50_32x4d              |imagenet                        |25M                             |
+|se_resnext101_32x4d             |imagenet                        |46M                             |
+
+</div>
+</details>
+
 ### 🛠 安装 <a name="installation"></a>
-Windows:
+**依赖库:**
+
+[Opencv 3+](https://opencv.org/releases/)
+[Libtorch 1.7+](https://pytorch.org/)
+
+**Windows:**
 
 配置libtorch 开发环境. [Visual studio](https://allentdan.github.io/2020/12/16/pytorch%E9%83%A8%E7%BD%B2torchscript%E7%AF%87) 和 [Qt Creator](https://allentdan.github.io/2021/01/21/QT%20Creator%20+%20Opencv4.x%20+%20Libtorch1.7%E9%85%8D%E7%BD%AE/#more)已经通过libtorch1.7x release的验证. 
 
-Linux && MacOS:
+**Linux && MacOS:**
 
 按照官方提供的pytorch c++ [部署](https://pytorch.org/tutorials/advanced/cpp_export.html). 比Windows要简单许多.
 
