@@ -196,8 +196,8 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 ### 🛠 Installation <a name="installation"></a>
 **Dependency:**
 
-[Opencv 3+](https://opencv.org/releases/)
-[Libtorch 1.7+](https://pytorch.org/)
+- [Opencv 3+](https://opencv.org/releases/)
+- [Libtorch 1.7+](https://pytorch.org/)
 
 **Windows:**
 

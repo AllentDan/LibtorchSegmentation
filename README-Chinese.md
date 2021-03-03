@@ -195,8 +195,8 @@ Dataset
 ### 🛠 安装 <a name="installation"></a>
 **依赖库:**
 
-[Opencv 3+](https://opencv.org/releases/)
-[Libtorch 1.7+](https://pytorch.org/)
+- [Opencv 3+](https://opencv.org/releases/)
+- [Libtorch 1.7+](https://pytorch.org/)
 
 **Windows:**
 
