@@ -229,4 +229,6 @@ This project is under developing. By now, these projects helps a lot.
 ### 🛡️ License <a name="license"></a>
 Project is distributed under [MIT License](https://github.com/qubvel/segmentation_models.pytorch/blob/master/LICENSE). Last but not least, **don't forget** your star...
 
+Feel free to commit issues or pull requests, contributors wanted.
+
 ![stargazers over time](https://starchart.cc/AllentDan/SegmentationCpp.svg)
