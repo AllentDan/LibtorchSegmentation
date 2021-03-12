@@ -1,6 +1,6 @@
 English | [中文](https://github.com/AllentDan/SegmentationCpp/blob/main/README-Chinese.md)
 
-**Please star me if this project helps you.**
+**If the star number equal to 2n-1, please make it 2n.**
 <div align="center">
 
 ![logo](https://raw.githubusercontent.com/AllentDan/ImageBase/main/OpenSource/LibtorchSegment.png)  
