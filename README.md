@@ -1,6 +1,5 @@
 English | [中文](https://github.com/AllentDan/SegmentationCpp/blob/main/README-Chinese.md)
 
-**If the star number equal to 2n-1, please make it 2n.**
 <div align="center">
 
 ![logo](https://raw.githubusercontent.com/AllentDan/ImageBase/main/OpenSource/LibtorchSegment.png)  
@@ -8,6 +7,7 @@ English | [中文](https://github.com/AllentDan/SegmentationCpp/blob/main/README
 Segmentation based on [LibTorch](https://pytorch.org/).**  
 
 </div>
+**Please give a star if this project helps you.**
 The main features of this library are:
 
  - High level API (just a line to create a neural network)
