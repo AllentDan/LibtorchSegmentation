@@ -8,7 +8,7 @@ Segmentation based on [LibTorch](https://pytorch.org/).**
 
 </div>
 
-**Please give a star if this project helps you.**
+**⭐Please give a star if this project helps you.⭐**
 
 The main features of this library are:
 
