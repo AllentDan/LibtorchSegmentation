@@ -7,7 +7,9 @@ English | [中文](https://github.com/AllentDan/SegmentationCpp/blob/main/README
 Segmentation based on [LibTorch](https://pytorch.org/).**  
 
 </div>
+
 **Please give a star if this project helps you.**
+
 The main features of this library are:
 
  - High level API (just a line to create a neural network)
