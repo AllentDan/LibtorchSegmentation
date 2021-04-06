@@ -15,7 +15,7 @@
  - 7 种模型架构可用于单类或者多类的分割任务 (包括Unet)
  - 7 种编码器网络
  - 所有的编码器都有预训练权重，可以更快更好地收敛
- - 相比于python下的GPU前向推理速度具有2倍或以上的优势, cpu下保持速度一致. (Unet测试于GTX 2070S).
+ - 相比于python下的GPU前向推理速度具有2倍或以上的优势, cpu下保持速度一致. (Unet测试于RTX 2070S).
  
 ### [📚 Libtorch教程 📚](https://github.com/AllentDan/LibtorchTutorials)
 
