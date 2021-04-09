@@ -208,8 +208,9 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 Configure the environment for libtorch development. [Visual studio](https://allentdan.github.io/2020/03/05/windows-libtorch-configuration/) and [Qt Creator](https://allentdan.github.io/2021/01/21/QT%20Creator%20+%20Opencv4.x%20+%20Libtorch1.7%E9%85%8D%E7%BD%AE/#more) are verified for libtorch1.7x release. Only Visual Studio  configuration blogs provided english version by now, Qt english version ASAP.
 
 **Linux && MacOS:**
+NOT fully supported!!! Refer to the issue [here](https://github.com/AllentDan/SegmentationCpp/issues/5).
+Then follow the official pytorch c++ tutorials [here](https://pytorch.org/tutorials/advanced/cpp_export.html). And then add opencv dependency.... Seems not easy, I will update later.
 
-Follow the official pytorch c++ tutorials [here](https://pytorch.org/tutorials/advanced/cpp_export.html). It can be no more difficult than windows.
 
 ### 🤝 Thanks <a name="thanks"></a>
 This project is under developing. By now, these projects helps a lot.
