@@ -209,8 +209,7 @@ Configure the environment for libtorch development. [Visual studio](https://alle
 
 **Linux && MacOS:**
 
-NOT fully supported!!! Refer to the issue [here](https://github.com/AllentDan/SegmentationCpp/issues/5).
-Then follow the official pytorch c++ tutorials [here](https://pytorch.org/tutorials/advanced/cpp_export.html). And then add opencv dependency.... Seems not easy, I will update later.
+Change the cmake file with your preference. Follow the official pytorch c++ tutorials [here](https://pytorch.org/tutorials/advanced/cpp_export.html).
 
 
 ### 🤝 Thanks <a name="thanks"></a>
