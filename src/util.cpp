@@ -28,7 +28,6 @@ std::string replace_all_distinct(std::string str, const std::string old_value, c
 void load_seg_data_from_folder(std::string folder, std::string image_type,
                                std::vector<std::string> &list_images, std::vector<std::string> &list_labels)
 {
-    std::cout<<folder<<std::endl;
     for_each_file(folder,
             // filter函数，lambda表达式
                   [&](const char*path,const char* name){
@@ -37,7 +36,6 @@ void load_seg_data_from_folder(std::string folder, std::string image_type,
 
                       //判断是否为jpeg文件
                       if(end_with(lower_name,".json")){
-                          std::cout<<full_path<<std::endl;
                           list_labels.push_back(full_path);
                           std::string image_path = replace_all_distinct(full_path, ".json", image_type);
                           list_images.push_back(image_path);
