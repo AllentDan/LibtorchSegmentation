@@ -207,8 +207,8 @@ Dataset
 
 **Linux && MacOS:**
 
-支持不完全!!! 见[此issue](https://github.com/AllentDan/SegmentationCpp/issues/5).
-按照官方提供的pytorch c++ [部署](https://pytorch.org/tutorials/advanced/cpp_export.html)。 添加opencv依赖....好像并不容易，我后续更新兼容版本，并提供cmake。
+根据需要修改cmake。
+按照官方提供的pytorch c++ [部署](https://pytorch.org/tutorials/advanced/cpp_export.html)。
 
 
 ### 🤝 感谢 <a name="thanks"></a>
