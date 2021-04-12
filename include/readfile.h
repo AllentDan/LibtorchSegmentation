@@ -3,7 +3,10 @@
 //
 #include <functional>
 #include <algorithm>
-#include  "_dirent.h"
+#ifdef _WIN32
+#include "_dirent.h"
+#else
+#include <dirent.h>
 #include <vector>
 
 #ifndef READ_FILE_READFILE_H
