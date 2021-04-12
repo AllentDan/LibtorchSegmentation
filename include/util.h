@@ -3,8 +3,9 @@
 #undef slots
 #include<torch/script.h>
 #include<torch/torch.h>
+#include "readfile.h"
 #define slots Q_SLOTS
-#include <io.h>
+
 
 inline torch::nn::Conv2dOptions conv_options(int64_t in_planes, int64_t out_planes, int64_t kerner_size,
     int64_t stride = 1, int64_t padding = 0, int groups = 1, bool with_bias = true, int dilation = 1) {
