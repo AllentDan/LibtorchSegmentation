@@ -28,36 +28,22 @@ std::string replace_all_distinct(std::string str, const std::string old_value, c
 void load_seg_data_from_folder(std::string folder, std::string image_type,
                                std::vector<std::string> &list_images, std::vector<std::string> &list_labels)
 {
-    long long hFile = 0; //句柄
-    struct _finddata_t fileInfo;
-    std::string pathName;
-    if ((hFile = _findfirst(pathName.assign(folder).append("\\*.*").c_str(), &fileInfo)) == -1)
-    {
-        return;
-    }
-    do
-    {
-        const char* s = fileInfo.name;
+    for_each_file(folder,
+            // filter函数，lambda表达式
+                  [&](const char*path,const char* name){
+                      auto full_path=std::string(path).append({file_sepator()}).append(name);
+                      std::string lower_name=tolower1(name);
 
-        if (fileInfo.attrib&_A_SUBDIR) //是子文件夹
-        {
-            //遍历子文件夹中的文件(夹)，查看是否有txt文件
-            if (strcmp(s, ".") == 0 || strcmp(s, "..") == 0) //子文件夹目录是.或者..
-                continue;
-            std::string sub_path = folder + "\\" + fileInfo.name;
-            load_seg_data_from_folder(sub_path, image_type, list_images, list_labels);
-        }
-        else //判断是不是txt文件
-        {
-
-            if (strstr(s, ".json"))
-            {
-                std::string label_path = folder + "\\" + fileInfo.name;
-                list_labels.push_back(label_path);
-                std::string image_path = replace_all_distinct(label_path, ".json", image_type);
-                list_images.push_back(image_path);
-            }
-        }
-    } while (_findnext(hFile, &fileInfo) == 0);
-    return;
+                      //判断是否为jpeg文件
+                      if(end_with(lower_name,".json")){
+                          list_labels.push_back(full_path);
+                          std::string image_path = replace_all_distinct(full_path, ".json", image_type);
+                          list_images.push_back(image_path);
+                      }
+                      //因为文件已经已经在lambda表达式中处理了，
+                      //不需要for_each_file返回文件列表，所以这里返回false
+                      return false;
+                  }
+            ,true//递归子目录
+    );
 }

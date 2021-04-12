@@ -7,9 +7,13 @@
 #include"PSPNet.h"
 #include"DeepLab.h"
 #include"SegDataset.h"
-#include <io.h>
+#include <sys/stat.h>
 #include<opencv2/opencv.hpp>
-
+#if _WIN32
+#include <io.h>
+#else
+#include<unistd.h>
+#endif
 template <class Model>
 class Segmentor
 {
@@ -40,10 +44,20 @@ void Segmentor<Model>::Initialize(int gpu_id,int _width, int _height, std::vecto
     width = _width;
     height = _height;
     name_list = _name_list;
+    std::cout<<pretrained_path<<std::endl;
+    struct stat s{};
+    lstat(pretrained_path.c_str(),&s);
+#ifdef _WIN32
     if ((_access(pretrained_path.data(), 0)) == -1)
     {
         throw "Pretrained path is invalid";
     }
+#else
+    if(access(pretrained_path.data(), F_OK) != 0)
+    {
+        throw "Pretrained path is invalid";
+    }
+#endif
     if(name_list.size()<2) throw  "Class num is less than 1";
     int gpu_num = torch::getNumGPUs();
     if(gpu_id>=gpu_num) throw "GPU id exceeds max number of gpus";
@@ -57,8 +71,9 @@ void Segmentor<Model>::Initialize(int gpu_id,int _width, int _height, std::vecto
 template <class Model>
 void Segmentor<Model>::Train(float learning_rate, int epochs, int batch_size,
                       std::string train_val_path, std::string image_type, std::string save_path){
-    std::string train_dir = train_val_path+"\\train";
-    std::string val_dir = train_val_path+"\\val";
+
+    std::string train_dir = train_val_path.append({ file_sepator() }).append("train");
+    std::string val_dir = train_val_path.append({ file_sepator() }).append("val");
 
     std::vector<std::string> list_images_train = {};
     std::vector<std::string> list_labels_train = {};
