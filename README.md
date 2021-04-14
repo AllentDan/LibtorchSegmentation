@@ -16,7 +16,7 @@ The main features of this library are:
  - 7 models architectures for binary and multi class segmentation (including legendary Unet)
  - 7 available encoders
  - All encoders have pre-trained weights for faster and better convergence
- - 2x or more faster than pytorch cuda inferece, same speed for cpu. (Unet tested in rtx 2070s).
+ - 1.25x or more faster than pytorch cuda inferece, same speed for cpu. (Unet tested in rtx 2070s).
  
 ### [📚 Libtorch Tutorials 📚](https://github.com/AllentDan/LibtorchTutorials/tree/master)
 
