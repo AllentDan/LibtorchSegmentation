@@ -172,7 +172,7 @@ void Segmentor<Model>::Train(float learning_rate, int epochs, int batch_size,
 template <class Model>
 void Segmentor<Model>::LoadWeight(std::string weight_path){
     torch::load(model, weight_path);
-	model->to(device);
+    model->to(device);
     model->eval();
     return;
 }
