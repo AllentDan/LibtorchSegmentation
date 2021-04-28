@@ -7,6 +7,7 @@
 #include "_dirent.h"
 #else
 #include <dirent.h>
+#endif
 #include <vector>
 
 #ifndef READ_FILE_READFILE_H
