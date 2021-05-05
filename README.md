@@ -18,9 +18,9 @@ The main features of this library are:
  - All encoders have pre-trained weights for faster and better convergence
  - 35% or more inference speed boost compared with pytorch cuda, same speed for cpu. (Unet tested in rtx 2070s).
  
-### [📚 Libtorch Tutorials 📚](https://github.com/AllentDan/LibtorchTutorials/tree/master)
+### [📚 Libtorch Tutorials 📚](https://github.com/AllentDan/LibtorchTutorials)
 
-Visit [Libtorch Tutorials Project](https://github.com/AllentDan/LibtorchTutorials/tree/master) if you want to know more about Libtorch Segment library.
+Visit [Libtorch Tutorials Project](https://github.com/AllentDan/LibtorchTutorials) if you want to know more about Libtorch Segment library.
 
 ### 📋 Table of content
  1. [Quick start](#start)
