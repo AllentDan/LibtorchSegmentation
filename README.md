@@ -205,7 +205,7 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 
 **Windows:**
 
-Configure the environment for libtorch development. [Visual studio](https://allentdan.github.io/2020/03/05/windows-libtorch-configuration/) and [Qt Creator](https://allentdan.github.io/2021/01/21/QT%20Creator%20+%20Opencv4.x%20+%20Libtorch1.7%E9%85%8D%E7%BD%AE/#more) are verified for libtorch1.7x release. Only Visual Studio  configuration blogs provided english version by now, Qt english version ASAP.
+Configure the environment for libtorch development. [Visual studio](https://allentdan.github.io/2020/03/05/windows-libtorch-configuration/) and [Qt Creator](https://allentdan.github.io/2020/03/05/QT-Creator-Opencv-Libtorch-CUDA-English/) are verified for libtorch1.7x release.
 
 **Linux && MacOS:**
 
