@@ -13,7 +13,7 @@
 
  - 高级的API (只需一行代码就可创建网络)
  - 7 种模型架构可用于单类或者多类的分割任务 (包括Unet)
- - 7 种编码器网络
+ - 15 种编码器网络
  - 所有的编码器都有预训练权重，可以更快更好地收敛
  - 相比于python下的GPU前向推理速度具有30%或以上的提速, cpu下保持速度一致. (Unet测试于RTX 2070S).
  
@@ -37,7 +37,7 @@
 
 #### 1. 用 Libtorch Segment 创建你的第一个分割网络
 
-分割模型是 LibTorch 的 torch::nn::Module的派生类, 可以很容易生成:
+[这](https://github.com/AllentDan/LibtorchSegmentation/releases/download/weights/segmentor.pt)是一个resnet34的torchscript模型，可以作为骨干网络权重。分割模型是 LibTorch 的 torch::nn::Module的派生类, 可以很容易生成:
 
 ```cpp
 #include "Segmentor.h"
@@ -85,7 +85,7 @@ segmentor.Train(0.0003/*initial leaning rate*/,
                 "your path to save segmentor.pt");
 ```
 
-- 预测测试。项目中提供了以ResNet34为骨干网络的FPN网络，训练了一些周期得到segmentor.pt文件。 您可以直接测试分割结果:
+- 预测测试。项目中提供了以ResNet34为骨干网络的FPN网络，训练了一些周期得到segmentor.pt文件[在这](https://github.com/AllentDan/LibtorchSegmentation/releases/download/weights/segmentor.pt)。 您可以直接测试分割结果:
 ```cpp
 cv::Mat image = cv::imread("your path to voc_person_seg\\val\\2007_004000.jpg");
 Segmentor<FPN> segmentor;
@@ -129,6 +129,7 @@ Dataset
 #### Encoders <a name="encoders"></a>
 - [x] ResNet
 - [x] ResNext
+- [x] VGG
 - [ ] ResNest
 - [ ] Se-Net
 
@@ -191,6 +192,24 @@ Dataset
 |se_resnet152                    |imagenet                        |64M                             |
 |se_resnext50_32x4d              |imagenet                        |25M                             |
 |se_resnext101_32x4d             |imagenet                        |46M                             |
+
+</div>
+</details>
+
+<details>
+<summary style="margin-left: 25px;">VGG</summary>
+<div style="margin-left: 25px;">
+
+|Encoder                         |Weights                         |Params, M                       |
+|--------------------------------|:------------------------------:|:------------------------------:|
+|vgg11                           |imagenet                        |9M                              |
+|vgg11_bn                        |imagenet                        |9M                              |
+|vgg13                           |imagenet                        |9M                              |
+|vgg13_bn                        |imagenet                        |9M                              |
+|vgg16                           |imagenet                        |14M                             |
+|vgg16_bn                        |imagenet                        |14M                             |
+|vgg19                           |imagenet                        |20M                             |
+|vgg19_bn                        |imagenet                        |20M                             |
 
 </div>
 </details>

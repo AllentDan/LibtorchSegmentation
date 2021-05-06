@@ -14,7 +14,7 @@ The main features of this library are:
 
  - High level API (just a line to create a neural network)
  - 7 models architectures for binary and multi class segmentation (including legendary Unet)
- - 7 available encoders
+ - 15 available encoders
  - All encoders have pre-trained weights for faster and better convergence
  - 35% or more inference speed boost compared with pytorch cuda, same speed for cpu. (Unet tested in rtx 2070s).
  
@@ -131,6 +131,7 @@ Dataset
 #### Encoders <a name="encoders"></a>
 - [x] ResNet
 - [x] ResNext
+- [x] VGG
 - [ ] ResNest
 - [ ] Se-Net
 
@@ -193,6 +194,24 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 |se_resnet152                    |imagenet                        |64M                             |
 |se_resnext50_32x4d              |imagenet                        |25M                             |
 |se_resnext101_32x4d             |imagenet                        |46M                             |
+
+</div>
+</details>
+
+<details>
+<summary style="margin-left: 25px;">VGG</summary>
+<div style="margin-left: 25px;">
+
+|Encoder                         |Weights                         |Params, M                       |
+|--------------------------------|:------------------------------:|:------------------------------:|
+|vgg11                           |imagenet                        |9M                              |
+|vgg11_bn                        |imagenet                        |9M                              |
+|vgg13                           |imagenet                        |9M                              |
+|vgg13_bn                        |imagenet                        |9M                              |
+|vgg16                           |imagenet                        |14M                             |
+|vgg16_bn                        |imagenet                        |14M                             |
+|vgg19                           |imagenet                        |20M                             |
+|vgg19_bn                        |imagenet                        |20M                             |
 
 </div>
 </details>
