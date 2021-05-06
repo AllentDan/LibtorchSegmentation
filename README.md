@@ -38,7 +38,7 @@ Visit [Libtorch Tutorials Project](https://github.com/AllentDan/LibtorchTutorial
 
 #### 1. Create your first Segmentation model with Libtorch Segment
 
-Segmentation model is just a LibTorch torch::nn::Module, which can be created as easy as:
+A resnet34 trochscript file is provided [here](https://github.com/AllentDan/LibtorchSegmentation/releases/download/weights/resnet34.pt). Segmentation model is just a LibTorch torch::nn::Module, which can be created as easy as:
 
 ```cpp
 #include "Segmentor.h"
@@ -58,12 +58,12 @@ All encoders have pretrained weights. Preparing your data the same way as during
 import torch
 from torchvision import models
 
-# resnet50 for example
-model = models.resnet50(pretrained=True)
+# resnet34 for example
+model = models.resnet34(pretrained=True)
 model.eval()
 var=torch.ones((1,3,224,224))
 traced_script_module = torch.jit.trace(model, var)
-traced_script_module.save("resnet50.pt")
+traced_script_module.save("resnet34.pt")
 ```
 
 Congratulations! You are done! Now you can train your model with your favorite backbone and segmentation framework.
@@ -86,7 +86,7 @@ segmentor.Train(0.0003/*initial leaning rate*/,
                 "your path to save segmentor.pt");
 ```
 
-- Predicting test. A segmentor.pt file is provided in the project. It is trained through a FPN with ResNet34 backbone for a few epochs. You can directly test the segmentation result through:
+- Predicting test. A segmentor.pt file is provided in the project [here](https://github.com/AllentDan/LibtorchSegmentation/releases/download/weights/segmentor.pt). It is trained through a FPN with ResNet34 backbone for a few epochs. You can directly test the segmentation result through:
 ```cpp
 cv::Mat image = cv::imread("your path to voc_person_seg\\val\\2007_004000.jpg");
 Segmentor<FPN> segmentor;
