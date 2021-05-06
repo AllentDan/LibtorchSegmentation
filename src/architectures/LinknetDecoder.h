@@ -1,5 +1,5 @@
 #pragma once
-#include"util.h"
+#include"../utils/util.h"
 
 torch::nn::Sequential TransposeX2(int in_channels, int out_channels, bool use_batchnorm = true);
 

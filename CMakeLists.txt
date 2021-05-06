@@ -28,7 +28,7 @@ include_directories(
 )
 
 
-FILE(GLOB ALL_SOURCES "*.cpp" "./src/*.cpp" )
+FILE(GLOB ALL_SOURCES "*.cpp" "./src/*.cpp"  "./src/architectures/*.cpp"  "./src/backbones/*.cpp"  "./src/utils/*.cpp" )
 add_executable(Segmentation src/main.cpp ${ALL_SOURCES})
 
 target_link_libraries(Segmentation ${OpenCV_LIBS})

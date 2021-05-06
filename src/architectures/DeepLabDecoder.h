@@ -31,7 +31,7 @@ DAMAGES(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include"util.h"
+#include"../utils/util.h"
 
 //struct StackSequentailImpl : torch::nn::SequentialImpl {
 //	using SequentialImpl::SequentialImpl;

@@ -1,16 +1,19 @@
 #ifndef UNET_H
 #define UNET_H
-#include"ResNet.h"
+#include"../backbones/ResNet.h"
+#include"../backbones/VGG.h"
 #include"UNetDecoder.h"
 
 class UNetImpl : public torch::nn::Module
 {
 public:
+	UNetImpl() {}
+	~UNetImpl() { delete[] encoder; }
     UNetImpl(int num_classes, std::string encoder_name = "resnet18", std::string pretrained_path = "", int encoder_depth = 5,
              std::vector<int> decoder_channels={256, 128, 64, 32, 16}, bool use_attention = false);
     torch::Tensor forward(torch::Tensor x);
 private:
-    ResNet encoder{nullptr};
+    Backbone *encoder;
     UNetDecoder decoder{nullptr};
     SegmentationHead segmentation_head{nullptr};
     int num_classes = 1;

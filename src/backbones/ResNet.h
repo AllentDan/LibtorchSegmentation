@@ -1,6 +1,7 @@
 #ifndef RESNET_H
 #define RESNET_H
-#include"util.h"
+#include"../utils/util.h"
+#include"../utils/InterFace.h"
 
 class BlockImpl : public torch::nn::Module {
 public:
@@ -17,21 +18,24 @@ private:
     torch::nn::BatchNorm2d bn2{ nullptr };
     torch::nn::Conv2d conv3{ nullptr };
     torch::nn::BatchNorm2d bn3{ nullptr };
-
 };
 TORCH_MODULE(Block);
 
 
-class ResNetImpl : public torch::nn::Module {
+class ResNetImpl : public Backbone{
 public:
     ResNetImpl(std::vector<int> layers, int num_classes = 1000, std::string model_type = "resnet18",
 		int groups = 1, int width_per_group = 64);
     torch::Tensor forward(torch::Tensor x);
-    std::vector<torch::Tensor> features(torch::Tensor x, int encoder_depth = 5);
     torch::nn::Sequential _make_layer(int64_t planes, int64_t blocks, int64_t stride = 1);
 	std::vector<torch::nn::Sequential> get_stages();
-	void make_dilated(std::vector<int> stage_list, std::vector<int> dilation_list);
+
+	std::vector<torch::Tensor> features(torch::Tensor x, int encoder_depth = 5) override;
+	torch::Tensor features_at(torch::Tensor x, int stage_num) override;
+	void make_dilated(std::vector<int> stage_list, std::vector<int> dilation_list) override;
+	void load_pretrained(std::string pretrained_path) override;
 private:
+	std::string model_type = "resnet18";
     int expansion = 1; bool is_basic = true;
 	int64_t inplanes = 64; int groups = 1; int base_width = 64;
     torch::nn::Conv2d conv1{ nullptr };

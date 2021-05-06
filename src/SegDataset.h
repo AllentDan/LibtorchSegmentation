@@ -1,8 +1,7 @@
 #ifndef SEGDATASET_H
 #define SEGDATASET_H
-#include"util.h"
+#include"utils/util.h"
 #include"fstream"
-#include "json.hpp"
 #include<opencv2/opencv.hpp>
 
 void show_mask(std::string json_path, std::string image_type = ".jpg");

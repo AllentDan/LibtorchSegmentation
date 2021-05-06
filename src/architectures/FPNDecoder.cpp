@@ -98,10 +98,11 @@ FPNDecoderImpl::FPNDecoderImpl(std::vector<int> encoder_channels, int encoder_de
 }
 
 torch::Tensor FPNDecoderImpl::forward(std::vector<torch::Tensor> features){
-    auto _p5 = p5->forward(features[5]);
-    auto _p4 = p4->forward(_p5, features[4]);
-    auto _p3 = p3->forward(_p4, features[3]);
-    auto _p2 = p2->forward(_p3, features[2]);
+	int features_len = features.size();
+    auto _p5 = p5->forward(features[features_len-1]);
+    auto _p4 = p4->forward(_p5, features[features_len - 2]);
+    auto _p3 = p3->forward(_p4, features[features_len - 3]);
+    auto _p2 = p2->forward(_p3, features[features_len - 4]);
     _p5 = seg_blocks[0]->as<SegmentationBlock>()->forward(_p5);
     _p4 = seg_blocks[1]->as<SegmentationBlock>()->forward(_p4);
     _p3 = seg_blocks[2]->as<SegmentationBlock>()->forward(_p3);

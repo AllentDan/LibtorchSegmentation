@@ -59,15 +59,20 @@ torch::Tensor BlockImpl::forward(torch::Tensor x) {
     return x;
 }
 
-ResNetImpl::ResNetImpl(std::vector<int> layers, int num_classes, std::string model_type, int _groups, int _width_per_group)
+ResNetImpl::ResNetImpl(std::vector<int> layers, int num_classes, std::string _model_type, int _groups, int _width_per_group)
 {
+	model_type = _model_type;
     if (model_type != "resnet18" && model_type != "resnet34")
     {
         expansion = 4;
         is_basic = false;
     }
-	groups = _groups;
-	base_width = _width_per_group;
+	if (model_type == "resnext50_32x4d") {
+		groups = 32; base_width = 4;
+	}
+	if (model_type == "resnext101_32x8d") {
+		groups = 32; base_width = 8;
+	}
     conv1 = torch::nn::Conv2d(conv_options(3, 64, 7, 2, 3, 1, false));
     bn1 = torch::nn::BatchNorm2d(torch::nn::BatchNorm2dOptions(64));
     layer1 = torch::nn::Sequential(_make_layer(64, layers[0]));
@@ -137,6 +142,62 @@ std::vector<torch::Tensor> ResNetImpl::features(torch::Tensor x, int encoder_dep
     //features.push_back(x);
 
     return features;
+}
+
+torch::Tensor ResNetImpl::features_at(torch::Tensor x, int stage_num) {
+	assert(stage_num > 0 && "the stage number must in range(1,5)");
+	x = conv1->forward(x);
+	x = bn1->forward(x);
+	x = torch::relu(x);
+	if (stage_num == 1) return x;
+	x = torch::max_pool2d(x, 3, 2, 1);
+
+	x = layer1->forward(x);
+	if (stage_num == 2) return x;
+	x = layer2->forward(x);
+	if (stage_num == 3) return x;
+	x = layer3->forward(x);
+	if (stage_num == 4) return x;
+	x = layer4->forward(x);
+	if (stage_num == 5) return x;
+	return x;
+}
+
+void ResNetImpl::load_pretrained(std::string pretrained_path) {
+	std::map<std::string, std::vector<int>> name2layers = getParams();
+	ResNet net_pretrained = ResNet(name2layers[model_type], 1000, model_type, groups, base_width);
+	torch::load(net_pretrained, pretrained_path);
+
+	torch::OrderedDict<std::string, at::Tensor> pretrained_dict = net_pretrained->named_parameters();
+	torch::OrderedDict<std::string, at::Tensor> model_dict = this->named_parameters();
+
+	for (auto n = pretrained_dict.begin(); n != pretrained_dict.end(); n++)
+	{
+		if (strstr((*n).key().data(), "fc.")) {
+			continue;
+		}
+		model_dict[(*n).key()] = (*n).value();
+	}
+
+	torch::autograd::GradMode::set_enabled(false);  // make parameters copying possible
+	auto new_params = model_dict; // implement this
+	auto params = this->named_parameters(true /*recurse*/);
+	auto buffers = this->named_buffers(true /*recurse*/);
+	for (auto& val : new_params) {
+		auto name = val.key();
+		auto* t = params.find(name);
+		if (t != nullptr) {
+			t->copy_(val.value());
+		}
+		else {
+			t = buffers.find(name);
+			if (t != nullptr) {
+				t->copy_(val.value());
+			}
+		}
+	}
+	torch::autograd::GradMode::set_enabled(true);
+	return;
 }
 
 torch::nn::Sequential ResNetImpl::_make_layer(int64_t planes, int64_t blocks, int64_t stride) {
