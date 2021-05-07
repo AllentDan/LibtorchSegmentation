@@ -29,22 +29,18 @@ void load_seg_data_from_folder(std::string folder, std::string image_type,
                                std::vector<std::string> &list_images, std::vector<std::string> &list_labels)
 {
     for_each_file(folder,
-            // filter函数，lambda表达式
                   [&](const char*path,const char* name){
                       auto full_path=std::string(path).append({file_sepator()}).append(name);
                       std::string lower_name=tolower1(name);
 
-                      //判断是否为jpeg文件
                       if(end_with(lower_name,".json")){
                           list_labels.push_back(full_path);
                           std::string image_path = replace_all_distinct(full_path, ".json", image_type);
                           list_images.push_back(image_path);
                       }
-                      //因为文件已经已经在lambda表达式中处理了，
-                      //不需要for_each_file返回文件列表，所以这里返回false
                       return false;
                   }
-            ,true//递归子目录
+            ,true
     );
 }
 
