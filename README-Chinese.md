@@ -29,9 +29,10 @@
     1. [架构](#architectures)
     2. [编码器](#encoders)
  5. [安装](#installation)
- 6. [感谢](#thanks)
- 7. [引用](#citing)
- 8. [证书](#license)
+ 6. [ToDo](#todo)
+ 7. [感谢](#thanks)
+ 8. [引用](#citing)
+ 9. [证书](#license)
 
 ### ⏳ 快速开始 <a name="start"></a>
 
@@ -226,8 +227,24 @@ Dataset
 
 **Linux && MacOS:**
 
-根据需要修改cmake。
-按照官方提供的pytorch c++ [部署](https://pytorch.org/tutorials/advanced/cpp_export.html)。
+安装libtorch和opencv。 
+对于libtorch， 按照官方[教程](https://pytorch.org/tutorials/advanced/cpp_export.html)安装。
+对于opencv， 按照官方安装[步骤](https://github.com/opencv/opencv)。
+
+如果你都配置好了他们，恭喜!!! 下载一个resnet34的预训练权重，[点击下载](https://github.com/AllentDan/LibtorchSegmentation/releases/download/weights/resnet34.pt)和一个示例.pt文件，[点击下载](https://github.com/AllentDan/LibtorchSegmentation/releases/download/weights/segmentor.pt)，放入weights文件夹。 
+
+更改CMakeLists.txt中的CMAKE_PREFIX_PATH为你自己的路径。 更改src/main.cpp中的图片路径预训练权重和加载的segmentor权重路径。随后，build路径在终端输入:
+```
+cd build
+cmake ..
+make
+./LibtorchSegmentation
+```
+
+### ⏳ ToDo <a name="todo"></a>
+- [ ] 更多的骨干网络和分割框架。
+- [ ] 数据增强
+- [ ] 训练技巧
 
 
 ### 🤝 感谢 <a name="thanks"></a>
