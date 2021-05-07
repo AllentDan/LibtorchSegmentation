@@ -18,15 +18,15 @@ int main(int argc, char *argv[])
 	//int64 t1 = cv::getCPUTickCount();
 	//std::cout << "execution time is " << (t1 - t0) / (double)cv::getTickFrequency() << " seconds" << std::endl;
 
-    cv::Mat image = cv::imread("D:\\AllentFiles\\data\\dataset4teach\\voc_person_seg\\val\\2007_004000.jpg");
+    cv::Mat image = cv::imread("./voc_person_seg/val/2007_004000.jpg");
 
     Segmentor<FPN> segmentor;
     segmentor.Initialize(-1,512,512,{"background","person"},
-                         "resnet34","D:\\AllentFiles\\code\\tmp\\resnet34.pt");
-    segmentor.LoadWeight("segmentor.pt");
+                         "resnet34","./weights/resnet34.pt");
+    segmentor.LoadWeight("./weights/segmentor.pt");
     segmentor.Predict(image,"person");
 
-    segmentor.Train(0.0003,300,4,"D:\\AllentFiles\\data\\dataset4teach\\voc_person_seg",".jpg","segmentor.pt");
+    //segmentor.Train(0.0003,300,4,"D:\\AllentFiles\\data\\dataset4teach\\voc_person_seg",".jpg","segmentor.pt");
 
     return 0;
 }

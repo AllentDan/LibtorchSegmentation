@@ -50,17 +50,17 @@ void Segmentor<Model>::Initialize(int gpu_id, int _width, int _height, std::vect
 #ifdef _WIN32
 	if ((_access(pretrained_path.data(), 0)) == -1)
 	{
-		throw "Pretrained path is invalid";
+		std::cout<< "Pretrained path is invalid";
 	}
 #else
 	if (access(pretrained_path.data(), F_OK) != 0)
 	{
-		throw "Pretrained path is invalid";
+		std::cout<< "Pretrained path is invalid";
 	}
 #endif
-	if (name_list.size() < 2) throw  "Class num is less than 1";
+	if (name_list.size() < 2) std::cout<<  "Class num is less than 1";
 	int gpu_num = torch::getNumGPUs();
-	if (gpu_id >= gpu_num) throw "GPU id exceeds max number of gpus";
+	if (gpu_id >= gpu_num) std::cout<< "GPU id exceeds max number of gpus";
 	if (gpu_id >= 0) device = torch::Device(torch::kCUDA, gpu_id);
 
 	model = Model(name_list.size(), encoder_name, pretrained_path);
@@ -187,7 +187,7 @@ void Segmentor<Model>::Predict(cv::Mat image, std::string which_class) {
 			break;
 		}
 	}
-	if (which_class_index == -1) throw which_class + "not in the name list";
+	if (which_class_index == -1) std::cout<< which_class + "not in the name list";
 	int image_width = image.cols;
 	int image_height = image.rows;
 	cv::resize(image, image, cv::Size(width, height));

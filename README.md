@@ -31,8 +31,9 @@ Visit [Libtorch Tutorials Project](https://github.com/AllentDan/LibtorchTutorial
     2. [Encoders](#encoders)
  5. [Installation](#installation)
  6. [Thanks](#thanks)
- 7. [Citing](#citing)
- 8. [License](#license)
+ 7. [To do list](#todo)
+ 8. [Citing](#citing)
+ 9. [License](#license)
 
 ### ⏳ Quick start <a name="start"></a>
 
@@ -228,7 +229,27 @@ Configure the environment for libtorch development. [Visual studio](https://alle
 
 **Linux && MacOS:**
 
-Change the cmake file with your preference. Follow the official pytorch c++ tutorials [here](https://pytorch.org/tutorials/advanced/cpp_export.html).
+Install libtorch and opencv. 
+
+For libtorch, follow the official pytorch c++ tutorials [here](https://pytorch.org/tutorials/advanced/cpp_export.html).
+
+For opencv, follow the official opencv install steps [here](https://github.com/opencv/opencv).
+
+If you have already configured them both, congratulations!!! Download the pretrained weight [here](https://github.com/AllentDan/LibtorchSegmentation/releases/download/weights/resnet34.pt) and a demo .pt file [here](https://github.com/AllentDan/LibtorchSegmentation/releases/download/weights/segmentor.pt) into weights. 
+
+Change the CMAKE_PREFIX_PATH to your own in CMakeLists.txt. Change the image path, pretrained path and segmentor path to your own in src/main.cpp. Then just do the following:
+```
+cd build
+cmake ..
+make
+./LibtorchSegmentation
+```
+
+
+### ⏳ ToDo <a name="todo"></a>
+- [ ] More segmentation architectures and backbones.
+- [ ] Data augmentations.
+- [ ] Training traicks.
 
 
 ### 🤝 Thanks <a name="thanks"></a>

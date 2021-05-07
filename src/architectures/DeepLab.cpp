@@ -6,14 +6,14 @@ DeepLabV3Impl::DeepLabV3Impl(int _num_classes, std::string encoder_name, std::st
 	auto encoder_param = encoder_params();
 	std::vector<int> encoder_channels = encoder_param[encoder_name]["out_channels"];
 	if (!encoder_param.contains(encoder_name))
-		throw "encoder name must in {resnet18, resnet34, resnet50, resnet101, resnet150, \
+		std::cout<< "encoder name must in {resnet18, resnet34, resnet50, resnet101, resnet150, \
 				resnext50_32x4d, resnext101_32x8d, vgg11, vgg11_bn, vgg13, vgg13_bn, \
 				vgg16, vgg16_bn, vgg19, vgg19_bn,}";
 	if (encoder_param[encoder_name]["class_type"] == "resnet")
 		encoder = new ResNetImpl(encoder_param[encoder_name]["layers"], 1000, encoder_name);
 	else if (encoder_param[encoder_name]["class_type"] == "vgg")
 		encoder = new VGGImpl(encoder_param[encoder_name]["cfg"], 1000, encoder_param[encoder_name]["batch_norm"]);
-	else throw "unknown error in backbone initialization";
+	else std::cout<< "unknown error in backbone initialization";
 
 	encoder->load_pretrained(pretrained_path);
 	encoder->make_dilated({ 5,4 }, {4,2});
@@ -39,14 +39,14 @@ DeepLabV3PlusImpl::DeepLabV3PlusImpl(int _num_classes, std::string encoder_name,
 	auto encoder_param = encoder_params();
 	std::vector<int> encoder_channels = encoder_param[encoder_name]["out_channels"];
 	if (!encoder_param.contains(encoder_name))
-		throw "encoder name must in {resnet18, resnet34, resnet50, resnet101, resnet150, \
+		std::cout<< "encoder name must in {resnet18, resnet34, resnet50, resnet101, resnet150, \
 				resnext50_32x4d, resnext101_32x8d, vgg11, vgg11_bn, vgg13, vgg13_bn, \
 				vgg16, vgg16_bn, vgg19, vgg19_bn,}";
 	if (encoder_param[encoder_name]["class_type"] == "resnet")
 		encoder = new ResNetImpl(encoder_param[encoder_name]["layers"], 1000, encoder_name);
 	else if (encoder_param[encoder_name]["class_type"] == "vgg")
 		encoder = new VGGImpl(encoder_param[encoder_name]["cfg"], 1000, encoder_param[encoder_name]["batch_norm"]);
-	else throw "unknown error in backbone initialization";
+	else std::cout<< "unknown error in backbone initialization";
 
 	encoder->load_pretrained(pretrained_path);
 	if (encoder_output_stride == 8) {
@@ -56,7 +56,7 @@ DeepLabV3PlusImpl::DeepLabV3PlusImpl(int _num_classes, std::string encoder_name,
 		encoder->make_dilated({ 5 }, { 2 });
 	}
 	else {
-		throw "Encoder output stride should be 8 or 16";
+		std::cout<< "Encoder output stride should be 8 or 16";
 	}
 
 	decoder = DeepLabV3PlusDecoder(encoder_channels, decoder_channels, decoder_atrous_rates, encoder_output_stride);

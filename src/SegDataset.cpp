@@ -103,7 +103,7 @@ SegDataset::SegDataset(int _resize_width, int _resize_height, std::vector<std::s
     }
     std::vector<cv::Scalar> color_list = get_color_list();
     if(_name_list.size()>color_list.size()){
-        throw "Num of classes exceeds defined color list, please add color to color list in SegDataset.cpp";
+        std::cout<< "Num of classes exceeds defined color list, please add color to color list in SegDataset.cpp";
     }
     for(int i = 0; i<_name_list.size(); i++){
         name2color.insert(std::pair<std::string, cv::Scalar>(_name_list[i],color_list[i]));

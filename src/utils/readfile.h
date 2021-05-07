@@ -17,7 +17,7 @@
 // 判断是否是文件夹
 inline bool is_folder(const char* dir_name){
     if (nullptr==dir_name)
-        throw "dir_name is nullprt";
+        std::cout<< "dir_name is nullprt";
     //throw_if(nullptr==dir_name);
     auto dir =opendir(dir_name);
     if(dir){
@@ -38,7 +38,7 @@ inline char file_sepator(){
 // 判断是否是文件夹
 inline bool is_folder(const std::string &dir_name){
     if (dir_name.empty())
-        throw "dir_name is empty";
+        std::cout<< "dir_name is empty";
     return is_folder(dir_name.data());
 }
 using file_filter_type=std::function<bool(const char*,const char*)>;

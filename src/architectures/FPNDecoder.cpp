@@ -51,7 +51,7 @@ torch::Tensor SegmentationBlockImpl::forward(torch::Tensor x){
 //vector求和
 template<typename T>
 T sumTensor(std::vector<T> x_list){
-    if(x_list.empty()) throw "sumTensor only accept non-empty list";
+    if(x_list.empty()) std::cout<< "sumTensor only accept non-empty list";
     T re = x_list[0];
     for(int i = 1; i<x_list.size(); i++){
         re+=x_list[i];
@@ -61,7 +61,7 @@ T sumTensor(std::vector<T> x_list){
 
 MergeBlockImpl::MergeBlockImpl(std::string policy){
     if(policy!=policies[0] && policy!=policies[1]){
-        throw "`merge_policy` must be one of: ['add', 'cat'], got "+policy;
+        std::cout<< "`merge_policy` must be one of: ['add', 'cat'], got "+policy;
     }
     _policy = policy;
 }
@@ -69,14 +69,14 @@ MergeBlockImpl::MergeBlockImpl(std::string policy){
 torch::Tensor MergeBlockImpl::forward(std::vector<torch::Tensor> x){
     if(_policy=="add") return sumTensor(x);
     else if (_policy == "cat") return torch::cat(x, 1);
-    else throw "`merge_policy` must be one of: ['add', 'cat'], got "+_policy;
+    else std::cout<< "`merge_policy` must be one of: ['add', 'cat'], got "+_policy;
 }
 
 FPNDecoderImpl::FPNDecoderImpl(std::vector<int> encoder_channels, int encoder_depth, int pyramid_channels, int segmentation_channels,
                        float dropout_, std::string merge_policy)
 {
     out_channels = merge_policy == "add"? segmentation_channels :segmentation_channels * 4;
-    if(encoder_depth<3) throw "Encoder depth for FPN decoder cannot be less than 3";
+    if(encoder_depth<3) std::cout<< "Encoder depth for FPN decoder cannot be less than 3";
     std::reverse(std::begin(encoder_channels),std::end(encoder_channels));
     encoder_channels = std::vector<int> (encoder_channels.begin(),encoder_channels.begin()+encoder_depth+1);
     p5 = torch::nn::Conv2d(conv_options(encoder_channels[0], pyramid_channels, 1));

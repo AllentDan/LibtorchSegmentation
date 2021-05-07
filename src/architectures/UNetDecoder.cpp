@@ -65,7 +65,7 @@ torch::nn::Sequential CenterBlock(int in_channels, int out_channels){
 UNetDecoderImpl::UNetDecoderImpl(std::vector<int> encoder_channels, std::vector<int> decoder_channels, int n_blocks,
                          bool use_attention, bool use_center)
 {
-    if (n_blocks != decoder_channels.size()) throw "Model depth not equal to your provided `decoder_channels`";
+    if (n_blocks != decoder_channels.size()) std::cout<< "Model depth not equal to your provided `decoder_channels`";
     std::reverse(std::begin(encoder_channels),std::end(encoder_channels));
 
     // computing blocks input and output channels

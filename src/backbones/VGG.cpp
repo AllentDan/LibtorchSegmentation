@@ -134,6 +134,6 @@ void VGGImpl::load_pretrained(std::string pretrained_path) {
 }
 
 void VGGImpl::make_dilated(std::vector<int> stage_list, std::vector<int> dilation_list) {
-	throw "'VGG' models do not support dilated mode due to Max Pooling operations for downsampling!";
+	std::cout<< "'VGG' models do not support dilated mode due to Max Pooling operations for downsampling!";
 	return;
 }

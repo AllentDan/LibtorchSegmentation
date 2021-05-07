@@ -5,14 +5,14 @@ LinkNetImpl::LinkNetImpl(int _num_classes, std::string encoder_name, std::string
 	auto encoder_param = encoder_params();
 	std::vector<int> encoder_channels = encoder_param[encoder_name]["out_channels"];
 	if (!encoder_param.contains(encoder_name))
-		throw "encoder name must in {resnet18, resnet34, resnet50, resnet101, resnet150, \
+		std::cout<< "encoder name must in {resnet18, resnet34, resnet50, resnet101, resnet150, \
 				resnext50_32x4d, resnext101_32x8d, vgg11, vgg11_bn, vgg13, vgg13_bn, \
 				vgg16, vgg16_bn, vgg19, vgg19_bn,}";
 	if (encoder_param[encoder_name]["class_type"] == "resnet")
 		encoder = new ResNetImpl(encoder_param[encoder_name]["layers"], 1000, encoder_name);
 	else if (encoder_param[encoder_name]["class_type"] == "vgg")
 		encoder = new VGGImpl(encoder_param[encoder_name]["cfg"], 1000, encoder_param[encoder_name]["batch_norm"]);
-	else throw "unknown error in backbone initialization";
+	else std::cout<< "unknown error in backbone initialization";
 
 	encoder->load_pretrained(pretrained_path);
 	decoder = LinknetDecoder(encoder_channels, 32, encoder_depth, decoder_use_batchnorm);
