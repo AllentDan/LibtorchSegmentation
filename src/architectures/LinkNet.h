@@ -7,7 +7,9 @@ class LinkNetImpl : public torch::nn::Module
 {
 public:
 	LinkNetImpl() {}
-	~LinkNetImpl() { delete[] encoder; }
+	~LinkNetImpl() {
+		//delete encoder;
+	}
 	LinkNetImpl(int num_classes, std::string encoder_name = "resnet18", std::string pretrained_path = "", int encoder_depth = 5,
 		int decoder_use_batchnorm = true);
 	torch::Tensor forward(torch::Tensor x);

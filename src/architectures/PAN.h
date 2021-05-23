@@ -7,7 +7,9 @@ class PANImpl : public torch::nn::Module
 {
 public:
 	PANImpl() {};
-	~PANImpl() { delete[] encoder; };
+	~PANImpl() {
+		//delete encoder;
+	}
 	PANImpl(int num_classes, std::string encoder_name = "resnet18", std::string pretrained_path = "", int decoder_channels = 32,
 		double upsampling = 4);
 	torch::Tensor forward(torch::Tensor x);

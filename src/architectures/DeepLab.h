@@ -7,7 +7,9 @@ class DeepLabV3Impl : public torch::nn::Module
 {
 public:
 	DeepLabV3Impl() {}
-	~DeepLabV3Impl() { delete[] encoder; }
+	~DeepLabV3Impl() {
+		//delete encoder;
+	}
 	DeepLabV3Impl(int num_classes, std::string encoder_name = "resnet18", std::string pretrained_path = "", int encoder_depth = 5,
 		int decoder_channels = 256, int in_channels = 3, double upsampling = 8);
 	torch::Tensor forward(torch::Tensor x);
@@ -22,7 +24,9 @@ class DeepLabV3PlusImpl : public torch::nn::Module
 {
 public:
 	DeepLabV3PlusImpl() {};
-	~DeepLabV3PlusImpl() { delete[] encoder; };
+	~DeepLabV3PlusImpl() {
+		//delete encoder;
+	}
 	DeepLabV3PlusImpl(int num_classes, std::string encoder_name = "resnet18", std::string pretrained_path = "", int encoder_depth = 5,
 		int encoder_output_stride = 16, int decoder_channels = 256, int in_channels = 3, double upsampling = 4);
 	torch::Tensor forward(torch::Tensor x);

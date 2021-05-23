@@ -19,6 +19,7 @@ class Segmentor
 {
 public:
 	Segmentor();
+	~Segmentor() {};
 	void Initialize(int gpu_id, int width, int height, std::vector<std::string> name_list,
 		std::string encoder_name, std::string pretrained_path);
 	void Train(float learning_rate, int epochs, int batch_size,
