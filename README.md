@@ -34,6 +34,7 @@ Visit [Libtorch Tutorials Project](https://github.com/AllentDan/LibtorchTutorial
  7. [To do list](#todo)
  8. [Citing](#citing)
  9. [License](#license)
+ 10. [Related repository](#related_repos)
 
 ### ⏳ Quick start <a name="start"></a>
 
@@ -272,7 +273,15 @@ This project is under developing. By now, these projects helps a lot.
 ```
 
 ### 🛡️ License <a name="license"></a>
-Project is distributed under [MIT License](https://github.com/qubvel/segmentation_models.pytorch/blob/master/LICENSE). Last but not least, **don't forget** your star...
+Project is distributed under [MIT License](https://github.com/qubvel/segmentation_models.pytorch/blob/master/LICENSE). 
+
+## Related repository <a name="related_repos"></a>
+Based on libtorch, I released following repositories:
+- [LibtorchTutorials](https://github.com/AllentDan/LibtorchTutorials)
+- [LibtorchSegmentation](https://github.com/AllentDan/LibtorchSegmentation)
+- [LibtorchDetection](https://github.com/AllentDan/LibtorchDetection)
+
+Last but not least, **don't forget** your star...
 
 Feel free to commit issues or pull requests, contributors wanted.
 

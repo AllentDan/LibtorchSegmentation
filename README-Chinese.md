@@ -33,6 +33,7 @@
  7. [感谢](#thanks)
  8. [引用](#citing)
  9. [证书](#license)
+ 10. [相关项目](#related_repos)
 
 ### ⏳ 快速开始 <a name="start"></a>
 
@@ -267,5 +268,13 @@ make
 ```
 
 ### 🛡️ 证书 <a name="license"></a>
-该项目以 [MIT License](https://github.com/qubvel/segmentation_models.pytorch/blob/master/LICENSE)开源，别忘了点赞哟
+该项目以 [MIT License](https://github.com/qubvel/segmentation_models.pytorch/blob/master/LICENSE)开源，
+
+## 相关项目 <a name="related_repos"></a>
+基于libtorch，我释放了如下开源项目:
+- [LibtorchTutorials](https://github.com/AllentDan/LibtorchTutorials)
+- [LibtorchSegmentation](https://github.com/AllentDan/LibtorchSegmentation)
+- [LibtorchDetection](https://github.com/AllentDan/LibtorchDetection)
+  
+别忘了点赞哟
 ![stargazers over time](https://starchart.cc/AllentDan/SegmentationCpp.svg)
