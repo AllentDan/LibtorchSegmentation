@@ -250,14 +250,17 @@ make
   - [ ] UNet++ [[paper](https://arxiv.org/pdf/1807.10165.pdf)]
   - [ ] ResNest
   - [ ] Se-Net
+  - [ ] ...
 - [x] Data augmentations
   - [x] Random horizontal flip
   - [x] Random vertical flip
   - [x] Random scale rotation
+  - [ ] ...
 - [x] Training tricks
   - [x] Combied dice and cross entropy loss
   - [x] Freeze backbone
   - [x] Multi step learning rate schedure
+  - [ ] ...
 
 
 ### 🤝 Thanks <a name="thanks"></a>
