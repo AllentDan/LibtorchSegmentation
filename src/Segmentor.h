@@ -1,3 +1,8 @@
+/*
+This libtorch implementation is writen by AllentDan.
+Copyright(c) AllentDan 2021,
+All rights reserved.
+*/
 #ifndef SEGMENTOR_H
 #define SEGMENTOR_H
 #include"architectures/FPN.h"
@@ -6,6 +11,7 @@
 #include"architectures/LinkNet.h"
 #include"architectures/PSPNet.h"
 #include"architectures/DeepLab.h"
+#include"utils/loss.h"
 #include"SegDataset.h"
 #include <sys/stat.h>
 #if _WIN32
@@ -22,6 +28,7 @@ public:
 	~Segmentor() {};
 	void Initialize(int gpu_id, int width, int height, std::vector<std::string> name_list,
 		std::string encoder_name, std::string pretrained_path);
+	void SetTrainTricks(trainTricks &tricks);
 	void Train(float learning_rate, int epochs, int batch_size,
 		std::string train_val_path, std::string image_type, std::string save_path);
 	void LoadWeight(std::string weight_path);
@@ -29,6 +36,7 @@ public:
 private:
 	int width = 512; int height = 512; std::vector<std::string> name_list;
 	torch::Device device = torch::Device(torch::kCPU);
+	trainTricks tricks;
 	//    FPN fpn{nullptr};
 	//    UNet unet{nullptr};
 	Model model{ nullptr };
@@ -69,6 +77,12 @@ void Segmentor<Model>::Initialize(int gpu_id, int _width, int _height, std::vect
 	model->to(device);
 }
 
+template<class Model>
+void Segmentor<Model>::SetTrainTricks(trainTricks &tricks) {
+	this->tricks = tricks;
+	return;
+}
+
 template <class Model>
 void Segmentor<Model>::Train(float learning_rate, int epochs, int batch_size,
 	std::string train_val_path, std::string image_type, std::string save_path) {
@@ -84,8 +98,10 @@ void Segmentor<Model>::Train(float learning_rate, int epochs, int batch_size,
 	load_seg_data_from_folder(train_dir, image_type, list_images_train, list_labels_train);
 	load_seg_data_from_folder(val_dir, image_type, list_images_val, list_labels_val);
 
-	auto custom_dataset_train = SegDataset(width, height, list_images_train, list_labels_train, name_list).map(torch::data::transforms::Stack<>());
-	auto custom_dataset_val = SegDataset(width, height, list_images_val, list_labels_val, name_list).map(torch::data::transforms::Stack<>());
+	auto custom_dataset_train = SegDataset(width, height, list_images_train, list_labels_train, \
+										   name_list, tricks, true).map(torch::data::transforms::Stack<>());
+	auto custom_dataset_val = SegDataset(width, height, list_images_val, list_labels_val, \
+		                                 name_list, tricks, false).map(torch::data::transforms::Stack<>());
 
 	auto data_loader_train = torch::data::make_data_loader<torch::data::samplers::RandomSampler>(std::move(custom_dataset_train), batch_size);
 	auto data_loader_val = torch::data::make_data_loader<torch::data::samplers::RandomSampler>(std::move(custom_dataset_val), batch_size);
@@ -94,11 +110,15 @@ void Segmentor<Model>::Train(float learning_rate, int epochs, int batch_size,
 		float loss_sum = 0;
 		int batch_count = 0;
 		float loss_train = 0;
+		float dice_coef_sum = 0;
 		float best_loss = 1e10;
 
-		if (epoch == epochs / 2) learning_rate /= 10;
+		for (auto decay_epoch : tricks.decay_epochs) {
+			if(decay_epoch-1 == epoch)
+				learning_rate /= 10;
+		}
 		torch::optim::Adam optimizer(model->parameters(), learning_rate);
-		if (epoch <= epochs / 2) {
+		if (epoch < tricks.freeze_epochs) {
 			for (auto mm : model->named_parameters())
 			{
 				if (strstr(mm.key().data(), "encoder"))
@@ -128,21 +148,26 @@ void Segmentor<Model>::Train(float learning_rate, int epochs, int batch_size,
 			// Execute the model
 			torch::Tensor prediction = model->forward(data);
 			// Compute loss value
-			torch::Tensor loss = torch::nll_loss2d(torch::log_softmax(prediction, /*dim=*/1), target);
+			torch::Tensor ce_loss = CELoss(prediction, target);
+			torch::Tensor dice_loss = DiceLoss(torch::softmax(prediction, 1), target.unsqueeze(1), name_list.size());
+			auto loss = dice_loss * tricks.dice_ce_ratio + ce_loss * (1 - tricks.dice_ce_ratio);
 			// Compute gradients
 			loss.backward();
 			// Update the parameters
 			optimizer.step();
 			loss_sum += loss.item().toFloat();
+			dice_coef_sum += (1- dice_loss).item().toFloat();
 			batch_count++;
 			loss_train = loss_sum / batch_count / batch_size;
+			auto dice_coef = dice_coef_sum / batch_count;
 
-			std::cout << "Epoch: " << epoch << "," << " Training Loss: " << loss_train << "\r";
+			std::cout << "Epoch: " << epoch << "," << " Training Loss: " << loss_train << \
+											   "," << " Dice coefficient: " << dice_coef << "\r";
 		}
 		std::cout << std::endl;
 		// validation part
 		model->eval();
-		loss_sum = 0; batch_count = 0;
+		loss_sum = 0; batch_count = 0; dice_coef_sum = 0;
 		float loss_val = 0;
 		for (auto& batch : *data_loader_val) {
 			auto data = batch.data;
@@ -154,12 +179,17 @@ void Segmentor<Model>::Train(float learning_rate, int epochs, int batch_size,
 			torch::Tensor prediction = model->forward(data);
 
 			// Compute loss value
-			torch::Tensor loss = torch::nll_loss2d(torch::log_softmax(prediction, /*dim=*/1), target);
+			torch::Tensor ce_loss = CELoss(prediction, target);
+			torch::Tensor dice_loss = DiceLoss(torch::softmax(prediction, 1), target.unsqueeze(1), name_list.size());
+			auto loss = dice_loss * tricks.dice_ce_ratio + ce_loss * (1 - tricks.dice_ce_ratio);
 			loss_sum += loss.item<float>();
+			dice_coef_sum += (1 - dice_loss).item().toFloat();
 			batch_count++;
 			loss_val = loss_sum / batch_count / batch_size;
+			auto dice_coef = dice_coef_sum / batch_count;
 
-			std::cout << "Epoch: " << epoch << "," << " Validation Loss: " << loss_val << "\r";
+			std::cout << "Epoch: " << epoch << "," << " Validation Loss: " << loss_val << \
+											   "," << " Dice coefficient: " << dice_coef << "\r";
 		}
 		std::cout << std::endl;
 		if (loss_val < best_loss) {

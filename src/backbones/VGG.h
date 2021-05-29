@@ -1,10 +1,15 @@
+/*
+This libtorch implementation is writen by AllentDan.
+Copyright(c) AllentDan 2021,
+All rights reserved.
+*/
 #pragma once
 #include"../utils/util.h"
 #include"../utils/InterFace.h"
-//对应pytorch中的make_features函数，返回CNN主体，该主体是一个torch::nn::Sequential对象
+//according to make_features function in torchvisio, return torch::nn::Sequential instance
 torch::nn::Sequential make_features(std::vector<int> &cfg, bool batch_norm);
 
-//VGG类的声明，包括初始化和前向传播
+//declare VGG, including initialization and forward
 class VGGImpl : public Backbone
 {
 private:

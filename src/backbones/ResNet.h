@@ -1,8 +1,16 @@
+/*
+This libtorch implementation is writen by AllentDan.
+Copyright(c) AllentDan 2021,
+All rights reserved.
+*/
 #ifndef RESNET_H
 #define RESNET_H
 #include"../utils/util.h"
 #include"../utils/InterFace.h"
 
+/*
+In this implementation, bottleneck and basicblock are merged.
+*/
 class BlockImpl : public torch::nn::Module {
 public:
     BlockImpl(int64_t inplanes, int64_t planes, int64_t stride_ = 1,

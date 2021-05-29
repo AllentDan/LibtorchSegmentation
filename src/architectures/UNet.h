@@ -1,3 +1,8 @@
+/*
+This libtorch implementation is writen by AllentDan.
+Copyright(c) AllentDan 2021,
+All rights reserved.
+*/
 #ifndef UNET_H
 #define UNET_H
 #include"../backbones/ResNet.h"

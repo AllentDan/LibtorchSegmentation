@@ -115,6 +115,7 @@ Dataset
 │   └......
 ```
 - Training or testing. Just like the example of "voc_person_seg", replace "voc_person_seg" with your own dataset path.
+- Refer to [training tricks](https://github.com/AllentDan/LibtorchSegmentation/blob/main/docs/training%20tricks.md) to improve your final training performance.
 
 
 ### 📦 Models <a name="models"></a>
@@ -127,15 +128,12 @@ Dataset
  - [x] LinkNet [[paper](https://arxiv.org/abs/1707.03718)]
  - [x] DeepLabV3 [[paper](https://arxiv.org/abs/1706.05587)]
  - [x] DeepLabV3+ [[paper](https://arxiv.org/abs/1802.02611)]
- - [ ] UNet++ [[paper](https://arxiv.org/pdf/1807.10165.pdf)]
 
 
 #### Encoders <a name="encoders"></a>
 - [x] ResNet
 - [x] ResNext
 - [x] VGG
-- [ ] ResNest
-- [ ] Se-Net
 
 The following is a list of supported encoders in the Libtorch Segment. All the encoders weights can be generated through torchvision except resnest. Select the appropriate family of encoders and click to expand the table and select a specific encoder and its pre-trained weights.
 
@@ -248,13 +246,22 @@ make
 
 
 ### ⏳ ToDo <a name="todo"></a>
-- [ ] More segmentation architectures and backbones.
-- [ ] Data augmentations.
-- [ ] Training traicks.
+- [ ] More segmentation architectures and backbones
+  - [ ] UNet++ [[paper](https://arxiv.org/pdf/1807.10165.pdf)]
+  - [ ] ResNest
+  - [ ] Se-Net
+- [x] Data augmentations
+  - [x] Random horizontal flip
+  - [x] Random vertical flip
+  - [x] Random scale rotation
+- [x] Training tricks
+  - [x] Combied dice and cross entropy loss
+  - [x] Freeze backbone
+  - [x] Multi step learning rate schedure
 
 
 ### 🤝 Thanks <a name="thanks"></a>
-This project is under developing. By now, these projects helps a lot.
+By now, these projects helps a lot.
 - [official pytorch](https://github.com/pytorch/pytorch)
 - [qubvel SMP](https://github.com/qubvel/segmentation_models.pytorch)
 - [wkentaro labelme](https://github.com/wkentaro/labelme)

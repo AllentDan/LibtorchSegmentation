@@ -1,3 +1,8 @@
+/*
+This libtorch implementation is writen by AllentDan.
+Copyright(c) AllentDan 2021,
+All rights reserved.
+*/
 #pragma once
 #include "../backbones/ResNet.h"
 #include"../backbones//VGG.h"

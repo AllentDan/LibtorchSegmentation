@@ -1,4 +1,5 @@
 #include "SegDataset.h"
+#include"utils/Augmentations.h"
 
 std::vector<cv::Scalar> get_color_list(){
     std::vector<cv::Scalar> color_list = {
@@ -90,23 +91,26 @@ void SegDataset::draw_mask(std::string json_path, cv::Mat &mask){
     }
 }
 
-SegDataset::SegDataset(int _resize_width, int _resize_height, std::vector<std::string> _list_images,
-                           std::vector<std::string> _list_labels, std::vector<std::string> _name_list)
+SegDataset::SegDataset(int resize_width, int resize_height, std::vector<std::string> list_images,
+                       std::vector<std::string> list_labels, std::vector<std::string> name_list,
+					   trainTricks tricks, bool isTrain)
 {
-    name_list = _name_list;
-    resize_width = _resize_width;
-    resize_height = _resize_height;
-    list_images = _list_images;
-    list_labels = _list_labels;
-    for(int i=0; i<_name_list.size(); i++){
-        name2index.insert(std::pair<std::string, int>(_name_list[i], i));
+	this->tricks = tricks;
+	this->name_list = name_list;
+	this->resize_width = resize_width;
+	this->resize_height = resize_height;
+	this->list_images = list_images;
+	this->list_labels = list_labels;
+	this->isTrain = isTrain;
+    for(int i=0; i<name_list.size(); i++){
+        name2index.insert(std::pair<std::string, int>(name_list[i], i));
     }
     std::vector<cv::Scalar> color_list = get_color_list();
-    if(_name_list.size()>color_list.size()){
+    if(name_list.size()>color_list.size()){
         std::cout<< "Num of classes exceeds defined color list, please add color to color list in SegDataset.cpp";
     }
-    for(int i = 0; i<_name_list.size(); i++){
-        name2color.insert(std::pair<std::string, cv::Scalar>(_name_list[i],color_list[i]));
+    for(int i = 0; i<name_list.size(); i++){
+        name2color.insert(std::pair<std::string, cv::Scalar>(name_list[i],color_list[i]));
     }
 }
 
@@ -118,17 +122,27 @@ torch::data::Example<> SegDataset::get(size_t index) {
     draw_mask(label_path,mask);
 
     //Data augmentation like flip or rotate could be implemented here...
-    cv::resize(image, image,cv::Size(resize_width,resize_height));
-    cv::resize(mask,mask,cv::Size(resize_width,resize_height));
-    torch::Tensor img_tensor = torch::from_blob(image.data, { image.rows, image.cols, 3 }, torch::kByte).permute({ 2, 0, 1 }); // Channels x Height x Width
-    torch::Tensor colorful_label_tensor = torch::from_blob(mask.data, { mask.rows, mask.cols, 3 }, torch::kByte);
-    torch::Tensor label_tensor = torch::zeros({image.rows, image.cols});
+	auto m_data = Data(image, mask);
+	if (isTrain) {
+		m_data = Augmentations::Resize(m_data, resize_width, resize_height, 1);
+		m_data = Augmentations::HorizontalFlip(m_data, tricks.horizontal_flip_prob);
+		m_data = Augmentations::VerticalFlip(m_data, tricks.vertical_flip_prob);
+		m_data = Augmentations::RandomScaleRotate(m_data, tricks.scale_rotate_prob, \
+												  tricks.rotate_limit, tricks.scale_limit, \
+												  tricks.interpolation, tricks.border_mode);
+	}
+	else {
+		m_data = Augmentations::Resize(m_data, resize_width, resize_height, 1);
+	}
+    torch::Tensor img_tensor = torch::from_blob(m_data.image.data, { m_data.image.rows, m_data.image.cols, 3 }, torch::kByte).permute({ 2, 0, 1 }); // Channels x Height x Width
+    torch::Tensor colorful_label_tensor = torch::from_blob(m_data.mask.data, { m_data.mask.rows, m_data.mask.cols, 3 }, torch::kByte);
+    torch::Tensor label_tensor = torch::zeros({ m_data.image.rows, m_data.image.cols});
 
     //encode "colorful" tensor to class_index meaning tensor, [w,h,3]->[w,h], pixel value is the index of a class
     for(int i = 0; i<name_list.size(); i++){
         cv::Scalar color = name2color[name_list[i]];
         torch::Tensor color_tensor = torch::tensor({color.val[0],color.val[1],color.val[2]});
-        label_tensor+=torch::all(colorful_label_tensor==color_tensor,-1)*i;
+        label_tensor = label_tensor + torch::all(colorful_label_tensor==color_tensor,-1)*i;
     }
     label_tensor = label_tensor.unsqueeze(0);
     return { img_tensor.clone(), label_tensor.clone() };

@@ -26,6 +26,18 @@ int main(int argc, char *argv[])
     segmentor.LoadWeight("./weights/segmentor.pt");
     segmentor.Predict(image,"person");
 
+	//trainTricks tricks;
+
+	////tricks for data augmentations
+	//tricks.horizontal_flip_prob = 0.5;
+	//tricks.vertical_flip_prob = 0.5;
+	//tricks.scale_rotate_prob = 0.3;
+
+	////tricks for training process
+	//tricks.decay_epochs = { 40, 80 };
+	//tricks.freeze_epochs = 8;
+
+	//segmentor.SetTrainTricks(tricks);
     //segmentor.Train(0.0003,300,4,"D:\\AllentFiles\\data\\dataset4teach\\voc_person_seg",".jpg","segmentor.pt");
 
     return 0;

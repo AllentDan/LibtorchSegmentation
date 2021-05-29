@@ -1,5 +1,9 @@
 ## Training tricks
-We provide a struct **trianTricks** for user to get better training performance.
+We provide a struct **trianTricks** for user to get better training performance. Users can apply the setting by:
+```
+trianTricks tricks;
+segmentor.SetTrainTricks(tricks);
+```
 
 ### Data augmentations
 Through OpenCV, we can also make data augmentations during training procedure. This repository mainly provide the following data augmentations:

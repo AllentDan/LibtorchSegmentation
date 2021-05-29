@@ -114,6 +114,7 @@ Dataset
 │   └......
 ```
 - 训练或测试。就像“ voc_person_seg”的示例一样，用自己的数据集路径替换“ voc_person_seg”。
+- 记得使用[训练技巧](https://github.com/AllentDan/LibtorchSegmentation/blob/main/docs/training%20tricks.md)以提高模型的训练效果。
 
 
 ### 📦 Models <a name="models"></a>
@@ -126,14 +127,11 @@ Dataset
  - [x] LinkNet [[paper](https://arxiv.org/abs/1707.03718)]
  - [x] DeepLabV3 [[paper](https://arxiv.org/abs/1706.05587)]
  - [x] DeepLabV3+ [[paper](https://arxiv.org/abs/1802.02611)]
- - [ ] UNet++ [[paper](https://arxiv.org/pdf/1807.10165.pdf)]
 
 #### Encoders <a name="encoders"></a>
 - [x] ResNet
 - [x] ResNext
 - [x] VGG
-- [ ] ResNest
-- [ ] Se-Net
 
 以下是该项目中受支持的编码器的列表。除resnest外，所有编码器权重都可以通过torchvision生成。选择适当的编码器，然后单击以展开表格，然后选择特定的编码器及其预训练的权重。
 
@@ -243,13 +241,22 @@ make
 ```
 
 ### ⏳ ToDo <a name="todo"></a>
-- [ ] 更多的骨干网络和分割框架。
-- [ ] 数据增强
-- [ ] 训练技巧
+- [ ] 更多的骨干网络和分割框架
+  - [ ] UNet++ [[paper](https://arxiv.org/pdf/1807.10165.pdf)]
+  - [ ] ResNest
+  - [ ] Se-Net
+- [x] 数据增强
+  - [x] 随机水平翻转
+  - [x] 随机垂直翻转
+  - [x] 随机缩放和旋转
+- [x] 训练技巧
+  - [x] 联合损失：dice和交叉熵
+  - [x] 冻结骨干网络
+  - [x] 学习率衰减策略
 
 
 ### 🤝 感谢 <a name="thanks"></a>
-这个项目还在施工，以下是目前给予帮助的项目.
+以下是目前给予帮助的项目.
 - [official pytorch](https://github.com/pytorch/pytorch)
 - [qubvel SMP](https://github.com/qubvel/segmentation_models.pytorch)
 - [wkentaro labelme](https://github.com/wkentaro/labelme)
