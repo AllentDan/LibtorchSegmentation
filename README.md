@@ -257,9 +257,9 @@ make
   - [x] Random scale rotation
   - [ ] ...
 - [x] Training tricks
-  - [x] Combied dice and cross entropy loss
+  - [x] Combined dice and cross entropy loss
   - [x] Freeze backbone
-  - [x] Multi step learning rate schedure
+  - [x] Multi step learning rate schedule
   - [ ] ...
 
 
