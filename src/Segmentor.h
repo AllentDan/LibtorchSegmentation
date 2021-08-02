@@ -102,9 +102,11 @@ void Segmentor<Model>::Train(float learning_rate, int epochs, int batch_size,
 										   name_list, tricks, true).map(torch::data::transforms::Stack<>());
 	auto custom_dataset_val = SegDataset(width, height, list_images_val, list_labels_val, \
 		                                 name_list, tricks, false).map(torch::data::transforms::Stack<>());
-
-	auto data_loader_train = torch::data::make_data_loader<torch::data::samplers::RandomSampler>(std::move(custom_dataset_train), batch_size);
-	auto data_loader_val = torch::data::make_data_loader<torch::data::samplers::RandomSampler>(std::move(custom_dataset_val), batch_size);
+	auto options = torch::data::DataLoaderOptions();
+	options.drop_last(true);
+	options.batch_size(batch_size);
+	auto data_loader_train = torch::data::make_data_loader<torch::data::samplers::RandomSampler>(std::move(custom_dataset_train), options);
+	auto data_loader_val = torch::data::make_data_loader<torch::data::samplers::RandomSampler>(std::move(custom_dataset_val), options);
 
 	for (int epoch = 0; epoch < epochs; epoch++) {
 		float loss_sum = 0;
