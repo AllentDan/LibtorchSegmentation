@@ -184,7 +184,7 @@ void Segmentor<Model>::Train(float learning_rate, int epochs, int batch_size,
 			torch::Tensor ce_loss = CELoss(prediction, target);
 			torch::Tensor dice_loss = DiceLoss(torch::softmax(prediction, 1), target.unsqueeze(1), name_list.size());
 			auto loss = dice_loss * tricks.dice_ce_ratio + ce_loss * (1 - tricks.dice_ce_ratio);
-			loss_sum += loss.item<float>();
+			loss_sum += loss.template item<float>();
 			dice_coef_sum += (1 - dice_loss).item().toFloat();
 			batch_count++;
 			loss_val = loss_sum / batch_count / batch_size;
