@@ -26,7 +26,7 @@ class Segmentor
 public:
 	Segmentor();
 	~Segmentor() {};
-	void Initialize(int gpu_id, int width, int height, std::vector<std::string>& name_list,
+	void Initialize(int gpu_id, int width, int height, std::vector<std::string>&& name_list,
 		std::string encoder_name, std::string pretrained_path);
 	void SetTrainTricks(trainTricks &tricks);
 	void Train(float learning_rate, int epochs, int batch_size,
@@ -48,7 +48,7 @@ Segmentor<Model>::Segmentor()
 };
 
 template <class Model>
-void Segmentor<Model>::Initialize(int gpu_id, int _width, int _height, std::vector<std::string>& _name_list,
+void Segmentor<Model>::Initialize(int gpu_id, int _width, int _height, std::vector<std::string>&& _name_list,
 	std::string encoder_name, std::string pretrained_path) {
 	width = _width;
 	height = _height;
