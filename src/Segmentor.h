@@ -26,13 +26,13 @@ class Segmentor
 public:
 	Segmentor();
 	~Segmentor() {};
-	void Initialize(int gpu_id, int width, int height, std::vector<std::string> name_list,
+	void Initialize(int gpu_id, int width, int height, std::vector<std::string>&& name_list,
 		std::string encoder_name, std::string pretrained_path);
 	void SetTrainTricks(trainTricks &tricks);
 	void Train(float learning_rate, int epochs, int batch_size,
 		std::string train_val_path, std::string image_type, std::string save_path);
 	void LoadWeight(std::string weight_path);
-	void Predict(cv::Mat image, std::string which_class);
+	void Predict(cv::Mat& image, const std::string& which_class);
 private:
 	int width = 512; int height = 512; std::vector<std::string> name_list;
 	torch::Device device = torch::Device(torch::kCPU);
@@ -48,7 +48,7 @@ Segmentor<Model>::Segmentor()
 };
 
 template <class Model>
-void Segmentor<Model>::Initialize(int gpu_id, int _width, int _height, std::vector<std::string> _name_list,
+void Segmentor<Model>::Initialize(int gpu_id, int _width, int _height, std::vector<std::string>&& _name_list,
 	std::string encoder_name, std::string pretrained_path) {
 	width = _width;
 	height = _height;
@@ -184,7 +184,7 @@ void Segmentor<Model>::Train(float learning_rate, int epochs, int batch_size,
 			torch::Tensor ce_loss = CELoss(prediction, target);
 			torch::Tensor dice_loss = DiceLoss(torch::softmax(prediction, 1), target.unsqueeze(1), name_list.size());
 			auto loss = dice_loss * tricks.dice_ce_ratio + ce_loss * (1 - tricks.dice_ce_ratio);
-			loss_sum += loss.item<float>();
+			loss_sum += loss.template item<float>();
 			dice_coef_sum += (1 - dice_loss).item().toFloat();
 			batch_count++;
 			loss_val = loss_sum / batch_count / batch_size;
@@ -211,7 +211,7 @@ void Segmentor<Model>::LoadWeight(std::string weight_path) {
 }
 
 template <class Model>
-void Segmentor<Model>::Predict(cv::Mat image, std::string which_class) {
+void Segmentor<Model>::Predict(cv::Mat& image, const std::string& which_class) {
 	cv::Mat srcImg = image.clone();
 	int which_class_index = -1;
 	for (int i = 0; i < name_list.size(); i++) {
