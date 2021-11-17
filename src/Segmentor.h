@@ -107,13 +107,13 @@ void Segmentor<Model>::Train(float learning_rate, int epochs, int batch_size,
 	options.batch_size(batch_size);
 	auto data_loader_train = torch::data::make_data_loader<torch::data::samplers::RandomSampler>(std::move(custom_dataset_train), options);
 	auto data_loader_val = torch::data::make_data_loader<torch::data::samplers::RandomSampler>(std::move(custom_dataset_val), options);
-
+	
+	float best_loss = 1e10;
 	for (int epoch = 0; epoch < epochs; epoch++) {
 		float loss_sum = 0;
 		int batch_count = 0;
 		float loss_train = 0;
 		float dice_coef_sum = 0;
-		float best_loss = 1e10;
 
 		for (auto decay_epoch : tricks.decay_epochs) {
 			if(decay_epoch-1 == epoch)
