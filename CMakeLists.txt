@@ -11,7 +11,7 @@ include_directories(
 find_package(OpenCV REQUIRED)
 include_directories(include)
 
-set(CMAKE_PREFIX_PATH "/home/SENSETIME/dongchunyu/dongchunyu/depends/libtorch181cu111")
+set(CMAKE_PREFIX_PATH "/path2libtorch")
 set(Torch_DIR libtorch/share/cmake/Torch)
 find_package(Torch REQUIRED)
 if (Torch_FOUND)
