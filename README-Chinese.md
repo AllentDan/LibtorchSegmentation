@@ -232,8 +232,9 @@ Dataset
 
 如果你都配置好了他们，恭喜!!! 下载一个resnet34的预训练权重，[点击下载](https://github.com/AllentDan/LibtorchSegmentation/releases/download/weights/resnet34.pt)和一个示例.pt文件，[点击下载](https://github.com/AllentDan/LibtorchSegmentation/releases/download/weights/segmentor.pt)，放入weights文件夹。 
 
-更改CMakeLists.txt中的CMAKE_PREFIX_PATH为你自己的路径。 更改src/main.cpp中的图片路径预训练权重和加载的segmentor权重路径。随后，build路径在终端输入:
-```
+更改src/main.cpp中的图片路径预训练权重和加载的segmentor权重路径。随后，build路径在终端输入:
+```bash
+export Torch_DIR='/path/to/libtorch'
 cd build
 cmake ..
 make

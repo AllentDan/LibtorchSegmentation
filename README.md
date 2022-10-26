@@ -236,8 +236,9 @@ For opencv, follow the official opencv install steps [here](https://github.com/o
 
 If you have already configured them both, congratulations!!! Download the pretrained weight [here](https://github.com/AllentDan/LibtorchSegmentation/releases/download/weights/resnet34.pt) and a demo .pt file [here](https://github.com/AllentDan/LibtorchSegmentation/releases/download/weights/segmentor.pt) into weights. 
 
-Change the CMAKE_PREFIX_PATH to your own in CMakeLists.txt. Change the image path, pretrained path and segmentor path to your own in src/main.cpp. Then just in build folder, open the terminal, do the following:
-```
+Change the image path, pretrained path and segmentor path to your own in src/main.cpp. Then just in build folder, open the terminal, do the following:
+```bash
+export Torch_DIR='/path/to/libtorch'
 cd build
 cmake ..
 make
