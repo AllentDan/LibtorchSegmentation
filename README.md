@@ -238,12 +238,12 @@ If you have already configured them both, congratulations!!! Download the pretra
 
 Change the image path, pretrained path and segmentor path to your own in src/main.cpp. Then just in build folder, open the terminal, do the following:
 
-Building library:
+Building shared or static library -DBUILD_SHARED=<TRUE/FALSE>:
 
 ```bash
 export Torch_DIR='/path/to/libtorch'
 cd build
-cmake ..
+cmake -DBUILD_SHARED=TRUE ..
 make
 sudo make install
 ```

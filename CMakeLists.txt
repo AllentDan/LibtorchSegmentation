@@ -1,10 +1,11 @@
+include(GNUInstallDirs)
+
 cmake_minimum_required(VERSION 3.10)
 
 set(CMAKE_CXX_STANDARD 14)
 
 set(PROJECT_VERSION 1.0.0)
 
-include(GNUInstallDirs)
 
 project(LibTorchSegmentation VERSION ${PROJECT_VERSION}
     DESCRIPTION "Image Segmentation library based on LibTorch")
@@ -38,74 +39,26 @@ FILE(GLOB ALL_SOURCES
     "src/utils/*.cpp"
 )
 
-
-add_library(segmentation ${ALL_SOURCES})
+if(BUILD_SHARED)
+    add_library(segmentation SHARED ${ALL_SOURCES})
+    message(STATUS "Target shared library")
+else()
+    add_library(segmentation STATIC ${ALL_SOURCES})
+    message(STATUS "Target static library")
+endif()
 
 configure_file(segmentation.pc.in segmentation.pc @ONLY)
 
-set(ROOT_PUBLIC_HEADERS
-    "src/SegDataset.h"
-    "src/Segmentor.h"
-)
- set_target_properties(segmentation PROPERTIES
-     PUBLIC_HEADER "${ROOT_PUBLIC_HEADERS}")
 
-install(TARGETS segmentation
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/segmentation)
-
-set(ARCHITECTURES_PUBLIC_HEADERS
-    "src/architectures/DeepLabDecoder.h"
-    "src/architectures/DeepLab.h"
-    "src/architectures/FPNDecoder.h"
-    "src/architectures/FPN.h"
-    "src/architectures/LinknetDecoder.h"
-    "src/architectures/LinkNet.h"
-    "src/architectures/PANDecoder.h"
-    "src/architectures/PAN.h"
-    "src/architectures/PSPNetDecoder.h"
-    "src/architectures/PSPNet.h"
-    "src/architectures/UNetDecoder.h"
-    "src/architectures/UNet.h"
-)
- set_target_properties(segmentation PROPERTIES
-    PUBLIC_HEADER "${ARCHITECTURES_PUBLIC_HEADERS}"
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/"
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/segmentation
+        FILES_MATCHING
+        PATTERN "*.h*"
 )
 
 install(TARGETS segmentation
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/segmentation/architectures)
-
-
-set(BACKBONES_PUBLIC_HEADERS
-    "src/backbones/ResNet.h"
-    "src/backbones/VGG.h"
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
- set_target_properties(segmentation PROPERTIES
-    PUBLIC_HEADER "${BACKBONES_PUBLIC_HEADERS}"
-)
-
-install(TARGETS segmentation
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/segmentation/backbones)
-
-set(UTILS_PUBLIC_HEADERS
-    "src/utils/Augmentations.h"
-    "src/utils/_dirent.h"
-    "src/utils/InterFace.h"
-    "src/utils/loss.h"
-    "src/utils/readfile.h"
-    "src/utils/util.h"
-    "src/utils/json.hpp"
-)
-
-set_target_properties(segmentation PROPERTIES
-    PUBLIC_HEADER "${UTILS_PUBLIC_HEADERS}"
-)
-
-install(TARGETS segmentation
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/segmentation/utils)
-
-#install(TARGETS segmentation
-#    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#)
 
 install(FILES ${CMAKE_BINARY_DIR}/segmentation.pc
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
