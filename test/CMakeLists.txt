@@ -31,7 +31,9 @@ set(ALL_LIBS
     segmentation
     ${OpenCV_LIBS}
     ${TORCH_LIBRARIES}
-    ${CUDA_LIBRARIES}${CUDA_CUBLAS_LIBRARIES} ${CUDA_cudart_static_LIBRARY}
+    ${CUDA_LIBRARIES}
+    ${CUDA_CUBLAS_LIBRARIES}
+    ${CUDA_cudart_static_LIBRARY}
     )
 
 add_executable(train train.cpp)
