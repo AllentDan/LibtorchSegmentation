@@ -141,13 +141,13 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 <summary style="margin-left: 25px;">ResNet</summary>
 <div style="margin-left: 25px;">
 
-|Encoder                         |Weights                         |Params, M                       |
-|--------------------------------|:------------------------------:|:------------------------------:|
-|resnet18                        |imagenet                        |11M                             |
-|resnet34                        |imagenet                        |21M                             |
-|resnet50                        |imagenet                        |23M                             |
-|resnet101                       |imagenet                        |42M                             |
-|resnet152                       |imagenet                        |58M                             |
+| Encoder   | Weights  | Params, M |
+| --------- | :------: | :-------: |
+| resnet18  | imagenet |    11M    |
+| resnet34  | imagenet |    21M    |
+| resnet50  | imagenet |    23M    |
+| resnet101 | imagenet |    42M    |
+| resnet152 | imagenet |    58M    |
 
 </div>
 </details>
@@ -156,10 +156,10 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 <summary style="margin-left: 25px;">ResNeXt</summary>
 <div style="margin-left: 25px;">
 
-|Encoder                         |Weights                         |Params, M                       |
-|--------------------------------|:------------------------------:|:------------------------------:|
-|resnext50_32x4d                 |imagenet                        |22M                             |
-|resnext101_32x8d                |imagenet                        |86M                             |
+| Encoder          | Weights  | Params, M |
+| ---------------- | :------: | :-------: |
+| resnext50_32x4d  | imagenet |    22M    |
+| resnext101_32x8d | imagenet |    86M    |
 
 </div>
 </details>
@@ -168,16 +168,16 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 <summary style="margin-left: 25px;">ResNeSt</summary>
 <div style="margin-left: 25px;">
 
-|Encoder                         |Weights                         |Params, M                       |
-|--------------------------------|:------------------------------:|:------------------------------:|
-|timm-resnest14d                 |imagenet                        |8M                              |
-|timm-resnest26d                 |imagenet                        |15M                             |
-|timm-resnest50d                 |imagenet                        |25M                             |
-|timm-resnest101e                |imagenet                        |46M                             |
-|timm-resnest200e                |imagenet                        |68M                             |
-|timm-resnest269e                |imagenet                        |108M                            |
-|timm-resnest50d_4s2x40d         |imagenet                        |28M                             |
-|timm-resnest50d_1s4x24d         |imagenet                        |23M                             |
+| Encoder                 | Weights  | Params, M |
+| ----------------------- | :------: | :-------: |
+| timm-resnest14d         | imagenet |    8M     |
+| timm-resnest26d         | imagenet |    15M    |
+| timm-resnest50d         | imagenet |    25M    |
+| timm-resnest101e        | imagenet |    46M    |
+| timm-resnest200e        | imagenet |    68M    |
+| timm-resnest269e        | imagenet |   108M    |
+| timm-resnest50d_4s2x40d | imagenet |    28M    |
+| timm-resnest50d_1s4x24d | imagenet |    23M    |
 
 </div>
 </details>
@@ -186,14 +186,14 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 <summary style="margin-left: 25px;">SE-Net</summary>
 <div style="margin-left: 25px;">
 
-|Encoder                         |Weights                         |Params, M                       |
-|--------------------------------|:------------------------------:|:------------------------------:|
-|senet154                        |imagenet                        |113M                            |
-|se_resnet50                     |imagenet                        |26M                             |
-|se_resnet101                    |imagenet                        |47M                             |
-|se_resnet152                    |imagenet                        |64M                             |
-|se_resnext50_32x4d              |imagenet                        |25M                             |
-|se_resnext101_32x4d             |imagenet                        |46M                             |
+| Encoder             | Weights  | Params, M |
+| ------------------- | :------: | :-------: |
+| senet154            | imagenet |   113M    |
+| se_resnet50         | imagenet |    26M    |
+| se_resnet101        | imagenet |    47M    |
+| se_resnet152        | imagenet |    64M    |
+| se_resnext50_32x4d  | imagenet |    25M    |
+| se_resnext101_32x4d | imagenet |    46M    |
 
 </div>
 </details>
@@ -202,16 +202,16 @@ The following is a list of supported encoders in the Libtorch Segment. All the e
 <summary style="margin-left: 25px;">VGG</summary>
 <div style="margin-left: 25px;">
 
-|Encoder                         |Weights                         |Params, M                       |
-|--------------------------------|:------------------------------:|:------------------------------:|
-|vgg11                           |imagenet                        |9M                              |
-|vgg11_bn                        |imagenet                        |9M                              |
-|vgg13                           |imagenet                        |9M                              |
-|vgg13_bn                        |imagenet                        |9M                              |
-|vgg16                           |imagenet                        |14M                             |
-|vgg16_bn                        |imagenet                        |14M                             |
-|vgg19                           |imagenet                        |20M                             |
-|vgg19_bn                        |imagenet                        |20M                             |
+| Encoder  | Weights  | Params, M |
+| -------- | :------: | :-------: |
+| vgg11    | imagenet |    9M     |
+| vgg11_bn | imagenet |    9M     |
+| vgg13    | imagenet |    9M     |
+| vgg13_bn | imagenet |    9M     |
+| vgg16    | imagenet |    14M    |
+| vgg16_bn | imagenet |    14M    |
+| vgg19    | imagenet |    20M    |
+| vgg19_bn | imagenet |    20M    |
 
 </div>
 </details>
@@ -254,8 +254,7 @@ cd test
 mkdir build && cd build
 cmake ..
 make
-./resnet34
-./train
+./resnet34 ../../voc_person_seg/val/2007_003747.jpg ../../weights/resnet34.pt ../../weights/segmentor.pt
 ```
 
 ### ⏳ ToDo <a name="todo"></a>

@@ -1,15 +1,27 @@
-#include <iostream>
 #include <Segmentor.h>
 
-int main(int argc, char *argv[])
-{
+#include <iostream>
 
-    cv::Mat image = cv::imread("./voc_person_seg/val/2007_003747.jpg");
+int main(int argc, char *argv[]) {
+  if (argc != 4) {
+    fprintf(stderr,
+            "usage:\n resnet34 person_image backbone_path "
+            "segmentor_path\nexample:\n./resnet34"
+            " ../../voc_person_seg/val/2007_003747.jpg"
+            " ../../weights/resnet34.pt ../../weights/segmentor.pt");
+    return 1;
+  }
+  auto image_path = argv[1];
+  auto backbone_path = argv[2];
+  auto segmentor_path = argv[3];
 
-    Segmentor<FPN> segmentor;
-    segmentor.Initialize(-1,512,512,{"background","person"}, "resnet34","./weights/resnet34.pt");
-    segmentor.LoadWeight("./weights/segmentor.pt");
-    segmentor.Predict(image,"person");
+  cv::Mat image = cv::imread(image_path);
 
-    return 0;
+  Segmentor<FPN> segmentor;
+  segmentor.Initialize(0, 512, 512, {"background", "person"}, "resnet34",
+                       backbone_path);
+  segmentor.LoadWeight(segmentor_path);
+  segmentor.Predict(image, "person");
+
+  return 0;
 }
